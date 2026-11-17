@@ -15,7 +15,17 @@ App web (fan, no oficial) que ayuda a elegir facción en Gaia Project: el usuari
 ## Stack preferido del dueño (Chino, Arsis)
 JavaScript, React, Node/Express, PostgreSQL. Migrar a Vite + React (JSX) es el primer paso previsto; backend solo si se necesita guardar partidas.
 
+## Comandos
+- Servir en local (no hay Python en la máquina del dueño): `node scripts/serve.mjs` → http://127.0.0.1:8080
+- Tests: `node --test` (sin dependencias).
+- Auditoría móvil: con el servidor levantado, `node scripts/audit-mobile.mjs 390 <carpeta>` (y 360). Recorre los 4 pasos y el detalle en Chrome headless, guarda capturas y reporta desbordes y objetivos táctiles < 44 px.
+
 ## Reglas de trabajo
 - No inventar datos: lo estimado se marca como estimado (ver FINAL y RIVAL en data.js).
-- Cambios al ranking: actualizar `docs/DATOS-Y-DECISIONES.md` y verificar con un script que el orden sea el esperado (p. ej. 4p sin subasta: Taklons/Ivits arriba; 2p: Ivits primero).
-- Verificar siempre a 390 px: sin desborde horizontal, objetivos táctiles ≥ 44 px, safe-area.
+- Cambios al ranking: actualizar `docs/DATOS-Y-DECISIONES.md` y los casos de `tests/ranking.test.mjs`, y correr los tests (p. ej. 4p sin subasta: Taklons/Ivits arriba; 2p: Ivits primero).
+- Verificar siempre a 360 y 390 px: sin desborde horizontal, objetivos táctiles ≥ 44 px, safe-area.
+- Correr `node --test` antes de cada commit; al corregir o agregar funcionalidad, agregar o actualizar tests.
+- Una rama nueva por tarea, nunca directo en main. Commits chicos con mensajes claros. Sin push, merge ni deploy hasta que el dueño lo pida.
+- No instalar ni actualizar dependencias sin avisar y justificarlo. Nada de comandos destructivos sin confirmación.
+- No leer, imprimir ni commitear `.env`, credenciales, llaves ni dumps. Si hace falta, usar `.env.example` con valores ficticios.
+- No hacer cambios de diseño ni de datos sin consultar. Antes de cada cambio, explicar brevemente qué y por qué.
