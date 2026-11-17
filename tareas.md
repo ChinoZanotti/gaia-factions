@@ -8,7 +8,6 @@ Origen: **Molly** = revisión de UX y sistema de diseño; **Case** = revisión d
 
 ### Prioridad 1 — Sin impacto visual, bajo riesgo
 
-- [ ] **5. Foco y scroll** (Molly). Al volver del detalle, restaurar el scroll y el foco en la fila tocada; al cambiar de paso, foco al título. Agregar `:focus-visible` a `.gp-sum button` y `.gp-color__head` (hoy el foco no se ve por `all: unset`). Archivos: `src/App.jsx`, `src/styles/app.css`.
 - [ ] **6. Limpieza menor** (Molly). Quitar CSS muerto (`.gp-pick`, `.gp-bar__hint`); la barra de pasos como decorativa (`aria-hidden`) en vez de `role="progressbar"` redundante con "Paso N de 4".
 
 ### Prioridad 2 — Cambios visuales chicos (requieren OK)
@@ -64,3 +63,4 @@ Origen: **Molly** = revisión de UX y sistema de diseño; **Case** = revisión d
 - [x] **3. Clon local limpio**: sin objetos del historial viejo (de 6,09 MB a 100 KB); sin forks en GitHub.
 - [x] **Dependabot**: `react` y `react-dom` agrupados y sin saltos mayores; cerrados los PRs #1 y #2 (React 19).
 - [x] **4. Ranking accesible**: `ol`/`li` con el botón adentro (`role="list"` explícito por VoiceOver), nombre accesible completo por fila (puesto, puntaje, motivo, ajuste), región `role="status"` que anuncia el nuevo top 3 con 600 ms de espera. Sin cambios visuales (capturas idénticas).
+- [x] **5. Foco y scroll**: al volver del detalle se recupera la posición en la lista y el foco en la fila tocada; al cambiar de paso o de vista el foco va al título; contorno de foco con teclado en los badges del resumen y los encabezados de color (hacia adentro donde hay `overflow: hidden`, también en las filas). Sin cambios visuales con mouse o toque.

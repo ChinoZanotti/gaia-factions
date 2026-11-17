@@ -9,6 +9,8 @@ button { font: inherit; }
 .gp-head { position: sticky; top: 0; z-index: 20; padding: calc(env(safe-area-inset-top) + 10px) max(16px, env(safe-area-inset-left)) 10px max(16px, env(safe-area-inset-right)); background: color-mix(in srgb, var(--bg-000) 92%, transparent); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--surface-300); }
 .gp-head__row { display: flex; align-items: center; gap: 12px; min-height: 44px; }
 .gp-head__title { flex: 1; min-width: 0; margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 18px; line-height: 22px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink); }
+/* recibe el foco solo por código (tabIndex -1) al cambiar de vista: no es un control, sin contorno */
+.gp-head__title:focus { outline: none; }
 .gp-head__title small { display: block; font-size: 12px; line-height: 16px; letter-spacing: .08em; color: var(--ink-muted); font-weight: 600; }
 .gp-dots { display: flex; gap: 6px; margin-top: 8px; }
 .gp-dot { flex: 1; height: 4px; border-radius: 2px; background: var(--surface-300); }
@@ -44,7 +46,9 @@ button { font: inherit; }
 .gp-chip__d { display: block; font-family: var(--font-body); font-weight: 400; font-size: 12px; line-height: 16px; color: var(--ink-muted); }
 .gp-chip[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--surface-200)); box-shadow: var(--shadow-glow); }
 .gp-chip[aria-pressed="true"] .gf-icon { color: var(--accent-ink); }
-.gp-chip:focus-visible, .gp-fbtn:focus-visible, .gp-row:focus-visible, .gp-pick:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.gp-chip:focus-visible, .gp-fbtn:focus-visible, .gp-row:focus-visible, .gp-pick:focus-visible, .gp-color__head:focus-visible, .gp-sum button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+/* dentro de contenedores con overflow: hidden el contorno va hacia adentro para que no se corte */
+.gp-row:focus-visible, .gp-color__head:focus-visible { outline-offset: -2px; }
 .gp-chip[disabled] { opacity: .4; cursor: not-allowed; }
 .gp-count { font-family: var(--font-display); font-weight: 700; color: var(--accent-ink); }
 

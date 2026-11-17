@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Button, IconButton, Logo } from './design-system';
 import { rank } from './data/data.js';
 import { FBY } from './lookups.js';
@@ -28,16 +28,37 @@ export default function App() {
   const inDetail = !!pick;
   const cur = STEPS[step];
 
-  useEffect(() => { window.scrollTo(0, 0); }, [pick]);
+  // Foco y scroll: al cambiar de paso o de vista el foco va al título (el lector anuncia dónde estás);
+  // al volver del detalle se recupera la posición en la lista y el foco en la fila que se tocó.
+  const titleRef = useRef(null);
+  const returnTo = useRef(null); // { id, y } de la fila desde la que se abrió el detalle
+  const mounted = useRef({ step: false, pick: false });
+  const openDetail = (id, pos) => { returnTo.current = { id, y: window.scrollY }; setPick({ id, pos }); };
+  const closeDetail = () => setPick(null);
+
+  useLayoutEffect(() => {
+    if (!mounted.current.step) { mounted.current.step = true; return; }
+    titleRef.current?.focus({ preventScroll: true });
+  }, [step]);
+
+  useLayoutEffect(() => {
+    if (!mounted.current.pick) { mounted.current.pick = true; return; }
+    if (pick) { window.scrollTo(0, 0); titleRef.current?.focus({ preventScroll: true }); return; }
+    const back = returnTo.current;
+    returnTo.current = null;
+    if (!back) return;
+    window.scrollTo(0, back.y);
+    document.querySelector('[data-fid="' + CSS.escape(back.id) + '"]')?.focus({ preventScroll: true });
+  }, [pick]);
 
   const head = (
     <header className="gp-head">
       <div className="gp-head__row">
         {(inDetail || step > 0) && (
           <IconButton icon="chevron-right" label="Volver" variant="ghost" style={{ transform: 'rotate(180deg)' }}
-            onClick={() => (inDetail ? setPick(null) : go(step - 1))} />
+            onClick={() => (inDetail ? closeDetail() : go(step - 1))} />
         )}
-        <h1 className="gp-head__title">
+        <h1 className="gp-head__title" ref={titleRef} tabIndex={-1}>
           <small>{inDetail ? 'Detalle de facción' : 'Paso ' + (step + 1) + ' de ' + STEPS.length}</small>
           {inDetail ? FBY[pick.id].name : cur.t}
         </h1>
@@ -61,13 +82,13 @@ export default function App() {
         {step === 2 && <StepRivals state={state} set={set} />}
         {step === 3 && <Summary state={state} go={go} />}
         <LiveHint step={step} />
-        <Ranking list={list} state={state} onPick={(id, pos) => setPick({ id, pos })} />
+        <Ranking list={list} state={state} onPick={openDetail} />
         <p className="gp-note">Basado en las estadísticas de Arun Murali (BGG, 2021): partidas de nivel alto, puntaje mínimo 120. Es una guía, no una garantía: el mapa y las losetas también cuentan.</p>
       </>
     );
 
   let action;
-  if (inDetail) action = <Button size="lg" block onClick={() => setPick(null)}>Volver al ranking</Button>;
+  if (inDetail) action = <Button size="lg" block onClick={closeDetail}>Volver al ranking</Button>;
   else if (step < 3) action = <Button size="lg" block iconRight="arrow-right" onClick={() => go(step + 1)}>{step === 2 ? 'Ver ranking final' : 'Siguiente'}</Button>;
   else action = <Button size="lg" block variant="secondary" icon="shuffle" onClick={() => { setState(INITIAL); go(0); }}>Nueva partida</Button>;
 
