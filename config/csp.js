@@ -2,15 +2,15 @@
 // En dev no se aplica: Vite inyecta <style> inline y usa un websocket para recargar.
 //
 // Por qué cada origen:
-// - script-src/style-src 'self': el build no tiene scripts ni estilos inline (los style={} de React van por CSSOM).
-// - fonts.googleapis.com / fonts.gstatic.com: Google Fonts (se pueden quitar si se autoalojan las fuentes, tareas.md #11).
+// - script-src/style-src/font-src 'self': el build no tiene scripts ni estilos inline (los style={} de React van por
+//   CSSOM) y las fuentes se sirven desde el propio sitio (src/styles/fonts.css): no hay orígenes externos.
 // - img-src 'self': favicon e íconos propios; los SVG del sistema de diseño son inline y sin URLs externas.
 // Limitaciones del <meta>: no admite frame-ancestors, report-uri ni sandbox.
 export const CSP = [
   "default-src 'none'",
   "script-src 'self'",
-  "style-src 'self' https://fonts.googleapis.com",
-  'font-src https://fonts.gstatic.com',
+  "style-src 'self'",
+  "font-src 'self'",
   "img-src 'self'",
   "connect-src 'self'",
   "manifest-src 'self'",

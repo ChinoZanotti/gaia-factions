@@ -13,7 +13,6 @@ Completa (ver "Hechas").
 
 ### Prioridad 2 — Cambios visuales chicos (requieren OK)
 
-- [ ] **11. Fuentes autoalojadas** (Case, Molly). Usar los `.woff2` originales del sistema de diseño (`project/fonts/` del artefacto) en `public/fonts/` con `@font-face`, sin dependencias nuevas; sacar Google Fonts de `index.html`. Necesita que el dueño provea los archivos o autorice sacarlos del artefacto. Al hacerla, quitar los orígenes de Google de `config/csp.js` (la política queda en `'self'`).
 - [ ] **12. Textos** (Molly). "sufres" → "sufrís" (`GUIDE.terrans`); "flojo en estas puntuaciones finales" → "poco encaje con estas puntuaciones" (y revisar el caso Ivits, cuyos valores de `FINAL` contradicen `DATOS-Y-DECISIONES.md`); comunicar empates ("Empata con X") y documentar el criterio; "Evitá" → "Qué evitar"; "jug." → "jugadores"; unificar rayas; glosario de siglas visible también en Consejos.
 - [ ] **13. Paso 3** (Molly). Usar el componente `Badge` para "Ocupado"/"Libre" y dar a los botones de color un nombre accesible que diga qué hacen.
 
@@ -66,4 +65,5 @@ Completa (ver "Hechas").
 - [x] **9. Números tabulares**: cerrada sin cambios por decisión del dueño. Chakra Petch no tiene dígitos tabulares (con y sin `tabular-nums` miden lo mismo), así que la propiedad no tiene efecto.
 - [x] **Rangos de 2p/3p verificados** contra las imágenes del artículo 01 (backlog): 83 de 84 valores bien; corregido Ambas en 3p sin subasta (2,05 → 2,12; mismo orden). Test que fija los 84 valores.
 - [x] **Nivel de la mesa** (diseño propuesto por Molly, alternativa A; aprobado con antes/después): el paso 1 pasa a "La mesa" con jugadores, experiencia (Aprendiendo / Con experiencia / Competitivo, por defecto Con experiencia) y subasta; datos por nivel desde las tablas del artículo 01; aviso de muestra chica (solo 3p Competitivo); nota de fuente y badge del resumen según el nivel. Documentado en `docs/DATOS-Y-DECISIONES.md`.
+- [x] **11. Fuentes autoalojadas**: Barlow 400–700 y Chakra Petch 600/700 desde `src/assets/fonts/` (idénticas por SHA-256 a las del artefacto del sistema de diseño), licencia OFL en `public/fonts/`, sin Google Fonts; la CSP queda en `'self'` (con test). Capturas idénticas píxel a píxel a la versión con Google, incluido el ≥ de las aperturas. Confirmado de paso que Chakra Petch no tiene dígitos tabulares (tarea 9).
 - [x] **10. CSP y referrer por `<meta>`**: `config/csp.js` (con tests) la inserta solo en el build, después del `charset`; política sin `unsafe-inline` ni comodines; `referrer` en `no-referrer`. Sin `upgrade-insecure-requests` (Pages ya fuerza HTTPS y rompía las pruebas locales). Verificado en Chrome: cero violaciones en todo el recorrido, fuentes e íconos cargan, y un script inline de control queda bloqueado.

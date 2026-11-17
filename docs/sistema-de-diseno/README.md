@@ -35,5 +35,5 @@ Logo, Icon, Button, IconButton, Panel, Banner, Badge, PlanetToken, ResourceToken
 
 ## Notas de la app
 - La app usa el bundle tal cual y lo adapta a celular con `src/styles/app.css` (el sistema trae `.gf-fcard` de 300px y `.gf-rank` con columna de barra de 120–220px; la app usa filas propias `.gp-row` en 2 líneas).
-- Fuentes: `src/styles/tokens.css` del paquete NO trae @font-face (index.html carga Google Fonts). Los .woff2 originales están en el artefacto del sistema de diseño en `project/fonts/` (barlow 400/500/600/700, chakra-petch 400/500/600/700, latin).
+- Fuentes: autoalojadas. `src/styles/fonts.css` declara los @font-face (los tokens no los traen) con los .woff2 de `src/assets/fonts/`: Barlow 400/500/600/700 y Chakra Petch 600/700, subconjunto latino. Son idénticos byte a byte (SHA-256) a los de `project/fonts/` del artefacto del sistema de diseño (que son los de Fontsource); Chakra Petch 400/500 existen ahí pero la app no los usa. Licencia SIL OFL 1.1 en `public/fonts/` (se publica con el sitio). Chakra Petch no tiene dígitos tabulares (`tnum`), así que `tabular-nums` no tiene efecto en los números; Barlow sí los tiene.
 - Íconos del sitio: `public/favicon.svg` es el emblema del bundle (`LOGOS.emblem`) copiado tal cual; `public/apple-touch-icon.png` (180 px) es ese mismo SVG renderizado sobre `bg-000`. Si cambia el emblema, regenerarlos.

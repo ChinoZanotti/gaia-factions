@@ -33,3 +33,8 @@ test('el plugin solo actúa en el build', () => {
   assert.equal(p.apply, 'build');
   assert.equal(p.transformIndexHtml.handler, injectSecurityMeta);
 });
+test('sin orígenes externos: fuentes y estilos solo del propio sitio', () => {
+  assert.ok(!/https?:/.test(CSP), CSP);
+  assert.deepEqual(directives['font-src'], ["'self'"]);
+  assert.deepEqual(directives['style-src'], ["'self'"]);
+});

@@ -1,4 +1,5 @@
-// Mismo orden de estilos que el index.html original: tokens → sistema de diseño → app.
+// Mismo orden de estilos que el index.html original: tokens → sistema de diseño → app (las fuentes primero).
+import './styles/fonts.css';
 import './styles/tokens.css';
 import './styles/bundle.css';
 import './styles/app.css';
