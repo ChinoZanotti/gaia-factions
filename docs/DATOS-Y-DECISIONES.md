@@ -1,6 +1,6 @@
 # Datos y decisiones del motor de ranking
 
-## Fuentes (en docs/datos/)
+## Fuentes (en docs/datos/, solo local: no se versiona ni se publica)
 Serie "Navigating through Statistics" de Arun Murali (BGG, sept–oct 2021, datos de Board Game Stats online / BGS). Texto en `articulos/`, tablas como imagen en `tablas/`. Material de referencia privado (no republicar).
 - 00 intro/metodología · 01 tier list por facción (rango promedio) · 02 rutas de puntuación · 03 puntuación final · 04a aperturas PI/AC/RL · 04b aperturas por facción.
 - Reglas del juego: `docs/reglas/gaia-rulebook.txt`.

@@ -13,7 +13,7 @@ App web (fan, no oficial) que ayuda a elegir facción en Gaia Project: el usuari
 - Sistema de diseño: `src/design-system/index.js` reexporta los componentes del bundle (que lee `window.React`, expuesto por `react-global.js`).
 - El resultado del build (`dist/`) es un sitio estático; no hay backend.
 - Flujo: 4 pasos + detalle. Ranking en vivo en cada paso con animación FLIP.
-- Datos y decisiones: `docs/DATOS-Y-DECISIONES.md`. Reglas: `docs/reglas/`. Artículos y tablas fuente: `docs/datos/`.
+- Datos y decisiones: `docs/DATOS-Y-DECISIONES.md`. Reglas: `docs/reglas/`. Artículos y tablas fuente: `docs/datos/`. Esas dos carpetas son material con derechos de terceros: existen solo en la máquina del dueño (están en `.gitignore`) y nunca se commitean ni publican.
 
 ## Stack preferido del dueño (Chino, Arsis)
 JavaScript, React, Node/Express, PostgreSQL. Backend solo si se necesita guardar partidas.

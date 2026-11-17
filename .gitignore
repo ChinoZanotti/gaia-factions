@@ -5,3 +5,7 @@ shots/
 .env
 .env.*
 !.env.example
+
+# Material de referencia con derechos de terceros: solo local, no se publica.
+docs/datos/
+docs/reglas/
