@@ -18,12 +18,10 @@ Completa (ver "Hechas").
 ### Prioridad 3 — Decisiones de producto o diseño
 
 
-### Del dueño (fuera del código)
-
-- [ ] **23. Dominio propio** (más adelante). Aísla localStorage del resto de `chinozanotti.github.io` y simplifica un backend futuro.
 
 ### Backlog
 
+- [ ] **23. Dominio propio** (más adelante). Dirección más corta que `chinozanotti.github.io/gaia-factions` y base para un backend si alguna vez hiciera falta.
 - [ ] Reemplazar `FINAL` con los ratings reales (hoja de Google del artículo 03), por cantidad de jugadores.
 - [ ] Mapa (distancia a planetas del color, Gaia cercanos, sectores) y losetas de ronda/avanzadas.
 - [ ] Aperturas: separar AC de conocimiento vs QIC y mostrar con qué pista combinan (artículo 04b).
