@@ -48,9 +48,7 @@ export default function CopyGuide({ name, guide }) {
         <Modal title="No pudimos copiar" footer={<div className="gp-copy"><Button variant="secondary" onClick={closeFallback}>Cerrar</Button></div>}>
           <div onKeyDown={(e) => { if (e.key === 'Escape') closeFallback(); }}>
             <p className="gp-p" style={{ marginTop: 0 }}>Tu navegador no nos dejó copiar. Seleccioná el texto y copialo a mano.</p>
-            <div className="gp-copy__box">
-              <textarea ref={textRef} className="gp-copy__text" readOnly value={text} aria-label={'Aperturas y consejos de ' + name} />
-            </div>
+            <textarea ref={textRef} className="gp-copy__text" readOnly value={text} aria-label={'Aperturas y consejos de ' + name} />
           </div>
         </Modal>
       )}

@@ -126,7 +126,7 @@ button { font: inherit; }
 .gp-hint { display: flex; gap: 8px; align-items: center; color: var(--ink-muted); font-size: 14px; line-height: 20px; }
 
 /* aviso de muestra chica (informativo: ícono info + texto, sin rojo) */
-.gp-sample { margin: 0; display: flex; gap: var(--space-2); align-items: flex-start; padding: var(--space-2) var(--space-3); font-size: 13px; line-height: 18px; color: var(--ink-muted); background: var(--surface-100); border: 1px solid var(--surface-300); }
+.gp-sample { margin: 0; display: flex; gap: var(--space-2); align-items: flex-start; padding: var(--space-2) var(--space-3); font-size: 13px; line-height: 18px; color: var(--ink-muted); background: var(--surface-100); border: 1px solid var(--surface-300); border-radius: var(--radius-md); }
 .gp-sample .gf-icon { flex: none; width: 18px; height: 18px; color: var(--info); }
 
 /* solo para lectores de pantalla (región viva del ranking) */
@@ -157,38 +157,8 @@ button { font: inherit; }
 .gp-gloss { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 14px; line-height: 20px; color: var(--ink-muted); }
 .gp-gloss b { font-family: var(--font-display); color: var(--ink); }
 
-/* ---------- chaflán en todo (pedido del dueño): sin esquinas redondeadas ----------
-   Recorte octogonal (clip-path) y, donde hay borde, un "anillo" del color del borde en ::before con la misma forma,
-   así el borde sigue la diagonal y el interior puede ser transparente. --c = chaflán, --bw = grosor del borde,
-   --ci = chaflán interior (+0,41 × borde para que la diagonal tenga el mismo grosor). Lo que recibe foco no se recorta. */
-.gf-badge, .gf-toast, .gp-sample, .gp-copy__box, .gf-meter, .gp-dot { border-radius: 0; clip-path: polygon(var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)), 0 var(--c)); }
-.gf-badge { --c: 5px; }
-.gf-toast, .gp-sample, .gp-copy__box { --c: var(--chamfer-md); }
-.gf-meter { --c: 3px; }
-.gp-dot { --c: 2px; }
-/* bordes como anillo */
-.gf-badge--success, .gf-badge--danger, .gf-badge--info, .gf-toast, .gp-sample, .gp-copy__box { position: relative; --bw: 1px; --ci: calc(var(--c) + var(--bw) * .41); }
-.gf-badge--success, .gf-badge--danger, .gf-badge--info { --bc: currentColor; }
-.gf-toast, .gp-copy__box { --bc: var(--frame); }
-.gp-sample { --bc: var(--surface-300); }
-.gf-badge--success, .gf-badge--danger, .gf-badge--info, .gf-toast, .gp-sample { border-color: transparent; }
-.gf-badge--success::before, .gf-badge--danger::before, .gf-badge--info::before, .gf-toast::before, .gp-sample::before, .gp-copy__box::before {
-  content: ""; position: absolute; inset: calc(-1 * var(--bw)); pointer-events: none; background: var(--bc); clip-path: polygon(evenodd, var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)), 0 var(--c), var(--c) 0, var(--ci) var(--bw), var(--bw) var(--ci), var(--bw) calc(100% - var(--ci)), var(--ci) calc(100% - var(--bw)), calc(100% - var(--ci)) calc(100% - var(--bw)), calc(100% - var(--bw)) calc(100% - var(--ci)), calc(100% - var(--bw)) var(--ci), calc(100% - var(--ci)) var(--bw), var(--ci) var(--bw), var(--c) 0); }
-.gp-copy__box::before { inset: 0; }
-/* aviso Deshacer: la sombra va afuera del recorte */
-.gp-undo .gf-toast { box-shadow: none; }
-.gp-undo { filter: drop-shadow(var(--shadow-panel)); }
-/* cuadro de texto de la ventana de respaldo: el contenedor lleva el chaflán y el borde (un textarea no admite ::before) */
-.gp-copy__box { margin-top: var(--space-3); padding: 1px; background: var(--surface-200); }
-.gp-copy__box .gp-copy__text { margin-top: 0; border: 0; border-radius: 0; background: transparent; }
-/* switch: el track no se recorta (el foco va en él); ::before = borde, ::after = relleno, perilla octogonal encima */
-.gf-switch__track { border-radius: 0; border-color: transparent; background: transparent; isolation: isolate; --c: var(--chamfer-sm); --bw: 1.5px; --ci: calc(var(--c) + var(--bw) * .41); }
-.gf-switch__track::before, .gf-switch__track::after { content: ""; position: absolute; pointer-events: none; z-index: -1; }
-.gf-switch__track::before { inset: calc(-1 * var(--bw)); background: var(--frame); clip-path: polygon(var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)), 0 var(--c)); }
-.gf-switch__track::after { inset: 0; background: var(--surface-300); --c: calc(var(--chamfer-sm) - var(--bw) * .59); clip-path: polygon(var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)), 0 var(--c)); }
-.gf-switch input:checked + .gf-switch__track { background: transparent; border-color: transparent; }
-.gf-switch input:checked + .gf-switch__track::before, .gf-switch input:checked + .gf-switch__track::after { background: var(--accent); }
-.gf-switch__knob { border-radius: 0; --c: 5px; clip-path: polygon(var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)), 0 var(--c)); }
+/* esquinas rectas (90°) en lo que el sistema dibuja redondeado o en cápsula: decisión del dueño (ni redondeado ni chaflán) */
+.gf-badge, .gf-toast, .gp-sample, .gp-copy__text, .gf-meter, .gp-dot, .gf-switch__track, .gf-switch__knob { border-radius: 0; }
 
 /* paneles planos del sistema (detalle): el marco es de 1 px, pero las capas interiores se recortan con −2/−3 px, así
    su diagonal caía sobre la del marco y la esquina quedaba sin borde. Con −0,59 px el borde sigue la diagonal con 1 px. */
