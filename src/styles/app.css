@@ -40,6 +40,10 @@ button { font: inherit; }
 /* segmented players */
 .gp-seg { display: flex; width: 100%; }
 .gp-seg .gf-seg__opt { flex: 1; height: 52px; font-size: 24px; }
+/* el contenedor (.gf-seg) tiene chaflán y marco de 2 px, pero sus opciones de los extremos son rectas: el recorte se comía
+   el marco en la diagonal. Se recortan también, 1 px menos, para que el marco siga la diagonal con ~2 px como en los lados. */
+.gp-seg .gf-seg__opt:first-child { --ci: calc(var(--chamfer-sm) - 1px); clip-path: polygon(var(--ci) 0, 100% 0, 100% 100%, var(--ci) 100%, 0 calc(100% - var(--ci)), 0 var(--ci)); }
+.gp-seg .gf-seg__opt:last-child { --ci: calc(var(--chamfer-sm) - 1px); clip-path: polygon(0 0, calc(100% - var(--ci)) 0, 100% var(--ci), 100% calc(100% - var(--ci)), calc(100% - var(--ci)) 100%, 0 100%); }
 /* experiencia: menos relleno y texto en hasta 2 renglones para que los nombres entren a 360 px */
 .gp-seg--level .gf-seg__opt { padding: 0 var(--space-2); font-size: 14px; line-height: 16px; text-align: center; white-space: normal; }
 /* campo con título visible (paso 1) */
