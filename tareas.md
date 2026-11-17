@@ -17,7 +17,6 @@ Completa (ver "Hechas").
 
 ### Prioridad 3 — Decisiones de producto o diseño
 
-- [ ] **24. Migrar a React 19.** Dependabot ignora los saltos mayores de React hasta hacerlo a mano: probar el bundle del sistema de diseño con React 19 y actualizar `react` y `react-dom` juntos.
 
 ### Del dueño (fuera del código)
 
@@ -75,4 +74,5 @@ Completa (ver "Hechas").
 - [x] **Esquinas rectas** (decisión del dueño; reemplaza el "chaflán en todo", que se revirtió): badges, aviso Deshacer, switch (riel y perilla), barras de puntaje, puntos de progreso, aviso de muestra chica y cuadro de texto del respaldo con esquinas a 90°. Se mantiene el arreglo de los paneles del detalle (el borde de 1 px ya no se pierde en la diagonal del chaflán). Documentado en el README del sistema de diseño.
 - [x] **20. Deuda de teclado del sistema documentada**: sección "Deuda conocida del sistema (bundle)" en el README del sistema de diseño (sin flechas en SegmentedControl y Tabs —verificado: con teclado no se puede cambiar jugadores, nivel ni pestañas—, Tabs sin tabpanel, Modal sin manejo de foco, botones de cerrar de 32 px).
 - [x] **25. Flechas del teclado desde la app**: componente `KeyNav` alrededor de los selectores de jugadores y nivel y de las pestañas del detalle (flechas con vuelta, Inicio, Fin; la selección y el foco se mueven juntos; las flechas no desplazan la página). Lógica en `src/lib/keyNav.js` con tests; 19 chequeos de teclado en Chrome. Sin cambios visuales.
+- [x] **24. Migración a React 19** (19.3.1, versión exacta): el bundle del sistema de diseño no usa nada de lo que React 19 eliminó (solo `createElement`, `useState`, `useRef`). Verificado: capturas idénticas a la versión con React 18 a 360/390 px, cero advertencias en modo desarrollo, foco, teclado, copiar, Deshacer, accesibilidad y CSP OK; auditoría de producción sin vulnerabilidades.
 - [x] **10. CSP y referrer por `<meta>`**: `config/csp.js` (con tests) la inserta solo en el build, después del `charset`; política sin `unsafe-inline` ni comodines; `referrer` en `no-referrer`. Sin `upgrade-insecure-requests` (Pages ya fuerza HTTPS y rompía las pruebas locales). Verificado en Chrome: cero violaciones en todo el recorrido, fuentes e íconos cargan, y un script inline de control queda bloqueado.

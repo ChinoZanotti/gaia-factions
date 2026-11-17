@@ -8,7 +8,7 @@ App web (fan, no oficial) que ayuda a elegir facción en Gaia Project: el usuari
 - Seguir el sistema de diseño en `docs/sistema-de-diseno/README.md` (componentes en `src/design-system/bundle.js` + `src/styles/bundle.css`, tokens en `src/styles/tokens.css`; el bundle no se edita). Nada de colores sueltos; un solo botón primary por vista.
 
 ## Estado actual
-- Vite + React 18.3.1 con JSX. Entrada `src/main.jsx` → `src/App.jsx` (estado y navegación) → `src/components/` (un componente por pantalla/sección).
+- Vite + React 19.3.1 con JSX. Entrada `src/main.jsx` → `src/App.jsx` (estado y navegación) → `src/components/` (un componente por pantalla/sección).
 - Datos y motor: `src/data/data.js` (módulo ES). Textos del ranking: `src/lib/reasons.js`. Animación: `src/hooks/useFlip.js`.
 - Sistema de diseño: `src/design-system/index.js` reexporta los componentes del bundle (que lee `window.React`, expuesto por `react-global.js`).
 - El resultado del build (`dist/`) es un sitio estático; no hay backend.

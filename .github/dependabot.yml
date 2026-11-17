@@ -12,8 +12,8 @@ updates:
       react:
         patterns: ["react", "react-dom"]
     ignore:
-      # Saltos mayores de React se hacen a mano: el bundle del sistema de diseño es para React 18.
-      # Ver tareas.md (migración a React 19).
+      # Saltos mayores de React se hacen a mano: hay que probar el bundle del sistema de diseño con la versión nueva
+      # (React 19 se verificó en noviembre de 2026; ver tareas.md).
       - dependency-name: "react"
         update-types: ["version-update:semver-major"]
       - dependency-name: "react-dom"
