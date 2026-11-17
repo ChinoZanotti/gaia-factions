@@ -1,10 +1,23 @@
 import { SegmentedControl, Switch } from '../design-system';
+import { DEFAULT_LEVEL, LEVELS } from '../data/data.js';
 
+// Paso 1, "La mesa": cantidad de jugadores, experiencia de la mesa y subasta.
+// Los títulos visibles van con aria-hidden porque el mismo texto ya es el nombre accesible de cada grupo.
 export default function StepPlayers({ state, set }) {
+  const level = LEVELS.find((l) => l.id === state.level) || LEVELS.find((l) => l.id === DEFAULT_LEVEL);
   return (
     <div className="gp-stack">
-      <SegmentedControl className="gp-seg" label="Cantidad de jugadores" value={state.players} onChange={(v) => set({ players: v })}
-        options={[2, 3, 4].map((n) => ({ value: n, label: <span>{n}<small>jugadores</small></span> }))} />
+      <div className="gp-field">
+        <p className="gp-label" aria-hidden="true">Jugadores</p>
+        <SegmentedControl className="gp-seg" label="Jugadores" value={state.players} onChange={(v) => set({ players: v })}
+          options={[2, 3, 4].map((n) => ({ value: n, label: String(n) }))} />
+      </div>
+      <div className="gp-field">
+        <p className="gp-label" aria-hidden="true">Experiencia de la mesa</p>
+        <SegmentedControl className="gp-seg gp-seg--level" label="Experiencia de la mesa" value={level.id} onChange={(v) => set({ level: v })}
+          options={LEVELS.map((l) => ({ value: l.id, label: l.name }))} />
+        <p className="gp-level-desc" aria-live="polite">{level.desc}</p>
+      </div>
       <div className="gp-switch">
         <Switch label="Elegimos facciones con subasta" checked={state.auction} onChange={(e) => set({ auction: e.target.checked })} />
       </div>

@@ -3,7 +3,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import * as D from '../src/data/data.js';
 
-const base = { players: 4, auction: false, scorings: [], rivals: [], blocked: [] };
+// Los casos conocidos del artículo 01 son del nivel Competitivo (el que usaba la app antes de agregar niveles).
+const base = { players: 4, auction: false, level: 'competitive', scorings: [], rivals: [], blocked: [] };
 const order = (patch) => D.rank({ ...base, ...patch }).map((r) => r.id);
 const byId = (patch) => Object.fromEntries(D.rank({ ...base, ...patch }).map((r) => [r.id, r]));
 
@@ -132,4 +133,57 @@ test('RANK coincide con las tablas del artículo 01 (84 valores)', () => {
 });
 test('3p sin subasta: orden esperado (Ambas 8ª con 2,12)', () => {
   assert.deepEqual(order({ players: 3 }), ['ivits', 'terrans', 'itars', 'taklons', 'nevlas', 'hadsch-hallas', 'firaks', 'ambas', 'xenos', 'geodens', 'bescods', 'bal-taks', 'lantids', 'gleens']);
+});
+
+// ---- Nivel de la mesa ----
+const lvl = (level, patch = {}) => order({ ...patch, level });
+test('niveles: Competitivo es exactamente RANK; los tres tienen las 14 facciones en rango válido', () => {
+  assert.equal(D.RANK_BY_LEVEL.competitive, D.RANK);
+  assert.deepEqual(D.LEVELS.map((l) => l.id), ['learning', 'experienced', 'competitive']);
+  for (const l of D.LEVELS) for (const p of [2, 3, 4]) for (const m of ['free', 'auction']) {
+    const t = D.RANK_BY_LEVEL[l.id][p][m];
+    assert.deepEqual(Object.keys(t).sort(), [...D.IDS].sort(), `${l.id} ${p} ${m}`);
+    for (const v of Object.values(t)) assert.ok(v >= 1 && v <= p, `${l.id} ${p} ${m}: ${v}`);
+    for (const id of D.IDS) assert.ok(D.GAMES[l.id][p][id] > 0, `partidas ${l.id} ${p} ${id}`);
+  }
+});
+test('niveles: promedio ponderado por partidas (control a mano)', () => {
+  // Taklons 4p sin subasta: 150–200 = 2,22 (481 partidas), 200–250 = 2,04 (376) → 2,14
+  assert.equal(D.RANK_BY_LEVEL.experienced[4].free.taklons, 2.14);
+  assert.equal(D.GAMES.experienced[4].taklons, 857);
+  // Ivits 2p sin subasta: <100 = 1,24 (464), 100–150 = 1,25 (500) → 1,25
+  assert.equal(D.RANK_BY_LEVEL.learning[2].free.ivits, 1.25);
+});
+test('nivel por defecto: Con experiencia; un nivel desconocido usa el de defecto', () => {
+  assert.equal(D.DEFAULT_LEVEL, 'experienced');
+  const s = { players: 4, auction: false, scorings: [], rivals: [], blocked: [] };
+  const exp = D.rank({ ...s, level: 'experienced' }).map((r) => r.id);
+  assert.deepEqual(D.rank(s).map((r) => r.id), exp);
+  assert.deepEqual(D.rank({ ...s, level: '__proto__' }).map((r) => r.id), exp);
+});
+test('niveles 4p sin subasta: top 3 y los cambios conocidos (Nevlas baja, Ambas sube)', () => {
+  assert.deepEqual(lvl('learning').slice(0, 3), ['ivits', 'itars', 'ambas']);
+  assert.deepEqual(lvl('experienced').slice(0, 3), ['taklons', 'ivits', 'itars']);
+  assert.equal(lvl('competitive').indexOf('nevlas') + 1, 5);
+  assert.equal(lvl('experienced').indexOf('nevlas') + 1, 8);
+  assert.equal(lvl('learning').indexOf('nevlas') + 1, 9);
+  assert.equal(lvl('learning').indexOf('ambas') + 1, 3);
+});
+test('niveles 2p sin subasta: Hadsch Hallas 2.º en Competitivo, 9.º en Aprendiendo; Ivits siempre 1.º', () => {
+  assert.equal(lvl('competitive', { players: 2 }).indexOf('hadsch-hallas') + 1, 2);
+  assert.equal(lvl('learning', { players: 2 }).indexOf('hadsch-hallas') + 1, 9);
+  for (const l of ['learning', 'experienced', 'competitive']) assert.equal(lvl(l, { players: 2 })[0], 'ivits');
+});
+test('aviso de muestra chica: solo 3p Competitivo (15–55 partidas por facción)', () => {
+  for (const p of [2, 3, 4]) for (const l of D.LEVELS) {
+    const n = D.sampleNote(p, l.id);
+    if (p === 3 && l.id === 'competitive') { assert.equal(n.min, 15); assert.equal(n.max, 55); assert.ok(n.margin >= 0.3); }
+    else assert.equal(n, null, `${p} ${l.id}`);
+  }
+});
+test('nota de fuente según nivel y jugadores', () => {
+  assert.equal(D.sourceOf(4, 'competitive'), 'mesas con elo promedio mayor a 300 y puntaje mínimo 120');
+  assert.equal(D.sourceOf(3, 'competitive'), 'mesas con elo promedio mayor a 250 y puntaje mínimo 120');
+  assert.equal(D.sourceOf(2, 'experienced'), 'mesas con elo promedio de 150 a 250');
+  assert.equal(D.sourceOf(4, 'learning'), 'mesas con elo promedio menor a 150');
 });

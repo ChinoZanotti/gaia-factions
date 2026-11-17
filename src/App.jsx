@@ -1,22 +1,23 @@
 import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Button, IconButton, Logo } from './design-system';
-import { rank } from './data/data.js';
+import { DEFAULT_LEVEL, rank, sampleNote, sourceOf } from './data/data.js';
 import { FBY } from './lookups.js';
 import Detail from './components/Detail.jsx';
 import LiveHint from './components/LiveHint.jsx';
 import Ranking from './components/Ranking.jsx';
+import SampleNote from './components/SampleNote.jsx';
 import StepPlayers from './components/StepPlayers.jsx';
 import StepRivals from './components/StepRivals.jsx';
 import StepScoring from './components/StepScoring.jsx';
 import Summary from './components/Summary.jsx';
 
 const STEPS = [
-  { t: 'Jugadores', h: '¿Cuántos juegan?', p: 'El ranking cambia mucho según la cantidad de jugadores.' },
+  { t: 'La mesa', h: '¿Cómo es la mesa?', p: 'Cantidad, experiencia y subasta cambian el ranking.' },
   { t: 'Puntuaciones finales', h: 'Puntuaciones finales', p: 'Elegí las 2 que salieron en esta partida.' },
   { t: 'Colores y rivales', h: 'Colores y rivales', p: 'Tocá la facción que eligió cada rival, o el color si no sabés cuál.' },
   { t: 'Ranking', h: 'Tu ranking', p: 'Tocá una facción para ver sus aperturas y consejos.' },
 ];
-const INITIAL = { players: 4, auction: false, scorings: [], rivals: [], blocked: [] };
+const INITIAL = { players: 4, auction: false, level: DEFAULT_LEVEL, scorings: [], rivals: [], blocked: [] };
 
 export default function App() {
   const [state, setState] = useState(INITIAL);
@@ -82,9 +83,10 @@ export default function App() {
         {step === 1 && <StepScoring state={state} set={set} />}
         {step === 2 && <StepRivals state={state} set={set} />}
         {step === 3 && <Summary state={state} go={go} />}
+        <SampleNote note={sampleNote(state.players, state.level)} />
         <LiveHint step={step} />
         <Ranking list={list} state={state} onPick={openDetail} />
-        <p className="gp-note">Basado en las estadísticas de Arun Murali (BGG, 2021): partidas de nivel alto, puntaje mínimo 120. Es una guía, no una garantía: el mapa y las losetas también cuentan.</p>
+        <p className="gp-note">{'Basado en las estadísticas de Arun Murali (BGG, 2021): ' + sourceOf(state.players, state.level) + '. Es una guía, no una garantía: el mapa y las losetas también cuentan.'}</p>
       </>
     );
 

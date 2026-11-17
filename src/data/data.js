@@ -1,10 +1,13 @@
 /* Gaia Factions — datos y motor de ranking (módulo ES).
    Fuente: serie "Navigating through Statistics" (Arun Murali, BGG, 2021, datos de BGS online).
-   Los rangos promedio salen de las tablas de partidas de nivel alto (>300 elo en 4p, >250 en 2p/3p, puntaje mínimo 120).
+   Los rangos promedio salen de las tablas del artículo 01 por nivel de la mesa (elo promedio de BGS de los jugadores):
+   Competitivo = >300 elo en 4p, >250 en 2p/3p, puntaje mínimo 120 (valores de la tabla); Con experiencia = 150–250 elo;
+   Aprendiendo = menos de 150 elo. Estos dos últimos son promedios propios de dos tramos de la tabla, ponderados por partidas.
    Las calificaciones de puntuación final son una escala 0–100 estimada a partir de la descripción del autor. */
 var IDS = ['terrans','lantids','xenos','gleens','taklons','ambas','hadsch-hallas','ivits','bal-taks','geodens','firaks','bescods','nevlas','itars'];
 
-// Rango promedio (menor = mejor). bid=false: "sin subasta" (fuerza real); bid=true: con subasta.
+// Rango promedio (menor = mejor). free: "sin subasta" (Avg. Rank Without Bid); auction: con subasta (Avg. Rank).
+// RANK es el nivel Competitivo: valores exactos de la tabla (fijados en tests/ranking.test.mjs).
 var RANK = {
   4: {
     free: {taklons:2.19, ivits:2.19, itars:2.23, nevlas:2.30, terrans:2.30, ambas:2.46, 'bal-taks':2.57, firaks:2.60, xenos:2.63, geodens:2.68, 'hadsch-hallas':2.71, lantids:2.91, bescods:2.91, gleens:2.94},
@@ -17,6 +20,69 @@ var RANK = {
   2: {
     free: {ivits:1.31, 'hadsch-hallas':1.42, itars:1.43, geodens:1.44, nevlas:1.45, taklons:1.48, 'bal-taks':1.49, ambas:1.55, terrans:1.57, firaks:1.57, bescods:1.61, xenos:1.62, gleens:1.63, lantids:1.78},
     auction: {ivits:1.36, 'hadsch-hallas':1.40, 'bal-taks':1.42, geodens:1.42, itars:1.44, nevlas:1.49, terrans:1.55, taklons:1.55, firaks:1.56, ambas:1.57, xenos:1.58, gleens:1.60, bescods:1.61, lantids:1.70}
+  }
+};
+
+// Nivel de la mesa. El elo de BGS arranca en 0, nunca baja de 100 y sube al ganarle a cada rival: mide experiencia
+// y resultados contra otros jugadores (ver docs/DATOS-Y-DECISIONES.md).
+var LEVELS = [
+  { id: 'learning', name: 'Aprendiendo', desc: 'Primeras partidas, o todavía no conocen bien las facciones.', source: 'mesas con elo promedio menor a 150' },
+  { id: 'experienced', name: 'Con experiencia', desc: 'Conocen las facciones y sus habilidades, pero juegan sin aperturas fijas.', source: 'mesas con elo promedio de 150 a 250' },
+  { id: 'competitive', name: 'Competitivo', desc: 'Juegan seguido, conocen las aperturas estándar y no regalan carga de poder.', source: null }
+];
+var DEFAULT_LEVEL = 'experienced';
+
+// Aprendiendo y Con experiencia: promedio de los tramos <100 y 100–150, y 150–200 y 200–250, ponderado por las
+// partidas de cada facción en cada tramo (cálculo propio sobre las tablas del artículo 01; sin filtro de puntaje).
+var RANK_BY_LEVEL = {
+  learning: {
+    4: {
+      free: {taklons:2.35, ivits:2.19, itars:2.26, nevlas:2.59, terrans:2.42, ambas:2.32, 'bal-taks':2.38, firaks:2.43, xenos:2.68, geodens:2.57, 'hadsch-hallas':2.8, lantids:2.82, bescods:2.81, gleens:2.66},
+      auction: {taklons:2.38, ivits:2.24, itars:2.31, nevlas:2.63, terrans:2.45, ambas:2.32, 'bal-taks':2.37, firaks:2.4, xenos:2.65, geodens:2.55, 'hadsch-hallas':2.78, lantids:2.72, bescods:2.78, gleens:2.6},
+    },
+    3: {
+      free: {taklons:1.91, ivits:1.61, itars:1.91, nevlas:2.06, terrans:2, ambas:1.95, 'bal-taks':2.01, firaks:1.95, xenos:2.18, geodens:2.07, 'hadsch-hallas':2.07, lantids:2.33, bescods:2.14, gleens:2.1},
+      auction: {taklons:1.92, ivits:1.62, itars:1.92, nevlas:2.1, terrans:2, ambas:1.97, 'bal-taks':2.01, firaks:1.96, xenos:2.15, geodens:2.05, 'hadsch-hallas':2.08, lantids:2.3, bescods:2.11, gleens:2.07},
+    },
+    2: {
+      free: {taklons:1.49, ivits:1.25, itars:1.47, nevlas:1.55, terrans:1.52, ambas:1.47, 'bal-taks':1.53, firaks:1.5, xenos:1.6, geodens:1.52, 'hadsch-hallas':1.54, lantids:1.79, bescods:1.55, gleens:1.6},
+      auction: {taklons:1.49, ivits:1.25, itars:1.48, nevlas:1.56, terrans:1.53, ambas:1.48, 'bal-taks':1.53, firaks:1.5, xenos:1.59, geodens:1.51, 'hadsch-hallas':1.54, lantids:1.76, bescods:1.53, gleens:1.59},
+    }
+  },
+  experienced: {
+    4: {
+      free: {taklons:2.14, ivits:2.19, itars:2.25, nevlas:2.59, terrans:2.38, ambas:2.32, 'bal-taks':2.58, firaks:2.54, xenos:2.67, geodens:2.73, 'hadsch-hallas':2.68, lantids:2.83, bescods:2.82, gleens:2.79},
+      auction: {taklons:2.24, ivits:2.28, itars:2.32, nevlas:2.61, terrans:2.41, ambas:2.38, 'bal-taks':2.56, firaks:2.52, xenos:2.61, geodens:2.69, 'hadsch-hallas':2.67, lantids:2.68, bescods:2.7, gleens:2.67},
+    },
+    3: {
+      free: {taklons:1.83, ivits:1.6, itars:1.87, nevlas:2.05, terrans:1.97, ambas:1.88, 'bal-taks':2.01, firaks:1.94, xenos:2.29, geodens:2.12, 'hadsch-hallas':2.11, lantids:2.29, bescods:2.27, gleens:2.35},
+      auction: {taklons:1.86, ivits:1.63, itars:1.96, nevlas:2.08, terrans:1.99, ambas:1.91, 'bal-taks':1.98, firaks:1.9, xenos:2.18, geodens:2.1, 'hadsch-hallas':2.13, lantids:2.18, bescods:2.18, gleens:2.3},
+    },
+    2: {
+      free: {taklons:1.51, ivits:1.24, itars:1.44, nevlas:1.44, terrans:1.55, ambas:1.48, 'bal-taks':1.52, firaks:1.51, xenos:1.62, geodens:1.56, 'hadsch-hallas':1.53, lantids:1.85, bescods:1.69, gleens:1.62},
+      auction: {taklons:1.52, ivits:1.25, itars:1.45, nevlas:1.45, terrans:1.56, ambas:1.49, 'bal-taks':1.51, firaks:1.49, xenos:1.6, geodens:1.55, 'hadsch-hallas':1.54, lantids:1.79, bescods:1.68, gleens:1.62},
+    }
+  },
+  competitive: RANK
+};
+
+// Partidas por facción en cada nivel (tablas de "picks" del artículo 01). Competitivo 4p: descontado el filtro de
+// 120 puntos (350 de 484 partidas); 2p/3p: antes del filtro (cota superior: puede haber menos).
+var GAMES = {
+  learning: {
+    4: {taklons:592, ivits:625, itars:643, nevlas:536, terrans:847, ambas:574, 'bal-taks':453, firaks:385, xenos:591, geodens:568, 'hadsch-hallas':560, lantids:372, bescods:444, gleens:462},
+    3: {taklons:321, ivits:450, itars:393, nevlas:328, terrans:592, ambas:376, 'bal-taks':259, firaks:267, xenos:363, geodens:398, 'hadsch-hallas':394, lantids:188, bescods:295, gleens:287},
+    2: {taklons:389, ivits:964, itars:719, nevlas:594, terrans:1102, ambas:845, 'bal-taks':456, firaks:473, xenos:541, geodens:751, 'hadsch-hallas':713, lantids:185, bescods:420, gleens:496},
+  },
+  experienced: {
+    4: {taklons:857, ivits:992, itars:978, nevlas:666, terrans:1156, ambas:863, 'bal-taks':796, firaks:669, xenos:753, geodens:740, 'hadsch-hallas':764, lantids:544, bescods:625, gleens:649},
+    3: {taklons:272, ivits:371, itars:341, nevlas:265, terrans:372, ambas:299, 'bal-taks':239, firaks:224, xenos:198, geodens:279, 'hadsch-hallas':277, lantids:160, bescods:181, gleens:200},
+    2: {taklons:370, ivits:792, itars:593, nevlas:379, terrans:638, ambas:606, 'bal-taks':405, firaks:448, xenos:369, geodens:411, 'hadsch-hallas':502, lantids:148, bescods:282, gleens:315},
+  },
+  competitive: {
+    4: {taklons:130, ivits:116, itars:124, nevlas:91, terrans:132, ambas:103, 'bal-taks':102, firaks:90, xenos:95, geodens:94, 'hadsch-hallas':90, lantids:77, bescods:79, gleens:77},
+    3: {taklons:37, ivits:55, itars:41, nevlas:26, terrans:44, ambas:48, 'bal-taks':30, firaks:38, xenos:36, geodens:34, 'hadsch-hallas':31, lantids:15, bescods:25, gleens:20},
+    2: {taklons:70, ivits:172, itars:107, nevlas:85, terrans:123, ambas:126, 'bal-taks':73, firaks:92, xenos:71, geodens:86, 'hadsch-hallas':89, lantids:54, bescods:67, gleens:93},
   }
 };
 
@@ -218,8 +284,10 @@ var GUIDE = {
 
 var FACTION_BASE = {};
 // ---- Motor ----
-function baseScores(players, auction) {
-  var t = RANK[players][auction ? 'auction' : 'free'];
+// Solo ids conocidos (allowlist): un valor como '__proto__' no debe pasar como nivel.
+function levelOf(level) { return Object.prototype.hasOwnProperty.call(RANK_BY_LEVEL, level) ? level : DEFAULT_LEVEL; }
+function baseScores(players, auction, level) {
+  var t = RANK_BY_LEVEL[levelOf(level)][players][auction ? 'auction' : 'free'];
   var min = Infinity, max = -Infinity;
   IDS.forEach(function (id) { min = Math.min(min, t[id]); max = Math.max(max, t[id]); });
   var out = {};
@@ -241,9 +309,26 @@ function rivalAdj(id, rivals) {
 }
 function colorOf(id) { for (var i = 0; i < COLORS.length; i++) if (COLORS[i].f.indexOf(id) >= 0) return COLORS[i].id; }
 
-// state: {players, auction, scorings:[ids], rivals:[ids], blocked:[colorIds]}
+// Aviso de muestra chica: si el margen de error (95 %) del rango promedio de alguna facción llega a ±0,30, el orden es
+// orientativo. Desvío del puesto al azar: 2p 0,5; 3p 0,82; 4p 1,12. Con los datos actuales aplica solo a 3p Competitivo.
+var SAMPLE_MARGIN = 0.3;
+var RANK_SD = { 2: 0.5, 3: Math.sqrt(2 / 3), 4: Math.sqrt(1.25) };
+function sampleNote(players, level) {
+  var g = GAMES[levelOf(level)][players], vals = IDS.map(function (id) { return g[id]; });
+  var min = Math.min.apply(null, vals), max = Math.max.apply(null, vals);
+  var margin = 1.96 * RANK_SD[players] / Math.sqrt(min);
+  return margin >= SAMPLE_MARGIN ? { min: min, max: max, margin: margin } : null;
+}
+
+// Texto de qué partidas respaldan el ranking, para la nota al pie.
+function sourceOf(players, level) {
+  var l = LEVELS.filter(function (x) { return x.id === levelOf(level); })[0];
+  return l.source || ('mesas con elo promedio mayor a ' + (players === 4 ? 300 : 250) + ' y puntaje mínimo 120');
+}
+
+// state: {players, auction, level, scorings:[ids], rivals:[ids], blocked:[colorIds]}; level por defecto: DEFAULT_LEVEL.
 function rank(state) {
-  var base = baseScores(state.players, state.auction);
+  var base = baseScores(state.players, state.auction, state.level);
   var taken = {};
   (state.blocked || []).forEach(function (c) { taken[c] = 'blocked'; });
   (state.rivals || []).forEach(function (r) { taken[colorOf(r)] = r; });
@@ -260,4 +345,4 @@ function rank(state) {
   return list;
 }
 
-export { IDS, RANK, SCORINGS, FINAL, COLORS, GUIDE, RIVAL_WHY, rank, colorOf, baseScores };
+export { IDS, RANK, RANK_BY_LEVEL, LEVELS, DEFAULT_LEVEL, GAMES, SCORINGS, FINAL, COLORS, GUIDE, RIVAL_WHY, rank, colorOf, baseScores, sampleNote, sourceOf };

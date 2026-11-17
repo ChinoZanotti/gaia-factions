@@ -6,14 +6,14 @@ import { baseRankOrder, reasonFor, rowAdjust, rowLabel, topSummary } from '../sr
 
 const NAMES = { taklons: 'Taklons', nevlas: 'Nevlas', ivits: 'Ivits', itars: 'Itars', lantids: 'Lantids', ambas: 'Ambas' };
 const nameOf = (id) => NAMES[id] || id;
-const base = { players: 4, auction: false, scorings: [], rivals: [], blocked: [] };
+const base = { players: 4, auction: false, level: 'competitive', scorings: [], rivals: [], blocked: [] };
 function reasons(patch) {
-  const s = { ...base, ...patch }, order = baseRankOrder(s.players, s.auction);
+  const s = { ...base, ...patch }, order = baseRankOrder(s.players, s.auction, s.level);
   return Object.fromEntries(rank(s).map((r) => [r.id, reasonFor(r, order[r.id], s.players, nameOf)]));
 }
 
 test('baseRankOrder: puestos 1..14 sin repetir', () => {
-  const o = baseRankOrder(4, false);
+  const o = baseRankOrder(4, false, 'competitive');
   assert.deepEqual(Object.values(o).sort((a, b) => a - b), Array.from({ length: 14 }, (_, i) => i + 1));
   assert.equal(o.gleens, 14);
 });
@@ -40,7 +40,7 @@ test('color ocupado: a mano o por un rival', () => {
 
 // ---- Accesibilidad del ranking ----
 function rows(patch) {
-  const s = { ...base, ...patch }, order = baseRankOrder(s.players, s.auction);
+  const s = { ...base, ...patch }, order = baseRankOrder(s.players, s.auction, s.level);
   return rank(s).map((r, i) => ({ r, pos: i + 1, label: rowLabel(r, i + 1, nameOf(r.id), reasonFor(r, order[r.id], s.players, nameOf)) }));
 }
 const byFaction = (patch) => Object.fromEntries(rows(patch).map((x) => [x.r.id, x]));

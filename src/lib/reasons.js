@@ -1,9 +1,9 @@
 // Textos del ranking. Lógica pura (sin React ni window): se testea en Node.
 import { IDS, RIVAL_WHY, baseScores } from '../data/data.js';
 
-// Puesto (1 = mejor) de cada facción solo por rango promedio, sin ajustes.
-export function baseRankOrder(players, auction) {
-  const b = baseScores(players, auction);
+// Puesto (1 = mejor) de cada facción solo por rango promedio del nivel, sin ajustes.
+export function baseRankOrder(players, auction, level) {
+  const b = baseScores(players, auction, level);
   const m = {};
   IDS.slice().sort((a, c) => b[c] - b[a]).forEach((id, i) => { m[id] = i + 1; });
   return m;
