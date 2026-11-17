@@ -11,8 +11,12 @@ export default function StepScoring({ state, set }) {
           return (
             <button key={c.id} type="button" className="gp-chip" aria-pressed={on} disabled={!on && full}
               onClick={() => set({ scorings: on ? state.scorings.filter((x) => x !== c.id) : state.scorings.concat(c.id) })}>
-              <Icon name={c.icon} />
-              <span><span className="gp-chip__t">{c.short}</span><span className="gp-chip__d">{c.desc}</span></span>
+              <span className="gp-chip__frame gf-chamfer">
+                <span className="gp-chip__face gf-chamfer">
+                  <Icon name={c.icon} />
+                  <span><span className="gp-chip__t">{c.short}</span><span className="gp-chip__d">{c.desc}</span></span>
+                </span>
+              </span>
             </button>
           );
         })}

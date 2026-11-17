@@ -17,7 +17,8 @@ export default function StepRivals({ state, set }) {
         const status = rivalHere.length ? 'Ocupado por ' + rivalHere.map((id) => FBY[id].name).join(' y ') : blocked ? 'Ocupado (marcado a mano)' : 'Libre';
         const statusId = 'color-' + c.id + '-estado';
         return (
-          <div key={c.id} className={'gp-color' + (off ? ' gp-color--off' : '')}>
+          <div key={c.id} className={'gp-color gf-chamfer' + (off ? ' gp-color--off' : '')}>
+            <div className="gp-color__in gf-chamfer">
             <button type="button" className="gp-color__head" aria-pressed={blocked} aria-label={'Marcar ' + c.name + ' como ocupado'}
               aria-describedby={statusId} onClick={() => toggle('blocked', c.id)}>
               <PlanetToken type={c.id} size="sm" />
@@ -36,6 +37,7 @@ export default function StepRivals({ state, set }) {
                   </button>
                 );
               })}
+            </div>
             </div>
           </div>
         );

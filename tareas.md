@@ -17,7 +17,6 @@ Completa (ver "Hechas").
 
 ### Prioridad 3 — Decisiones de producto o diseño
 
-- [ ] **19. Chaflán o borde redondeado** en chips, colores y ranking (Molly). Hoy usan `radius-md` en vez de la firma del sistema: aplicar chaflán o documentar la excepción.
 - [ ] **20. Pestañas con flechas del teclado** (Molly). Lo implementa el bundle: anotar como deuda del sistema de diseño, no parchear desde la app.
 - [ ] **24. Migrar a React 19.** Dependabot ignora los saltos mayores de React hasta hacerlo a mano: probar el bundle del sistema de diseño con React 19 y actualizar `react` y `react-dom` juntos.
 
@@ -70,4 +69,5 @@ Completa (ver "Hechas").
 - [x] **15. Descubribilidad** (prototipo aprobado con antes/después, textos cortos): flecha `›` en cada fila del ranking (oculta a lectores de pantalla: la fila ya se anuncia como botón); pista de los pasos 1–3 "Ranking en vivo: tocá una facción para ver su detalle."; leyenda "+N / −N: ajuste por puntuaciones finales y rivales." solo cuando hay ajustes. Un renglón cada texto a 390 px.
 - [x] ~~**17. Compartir partida por enlace**~~: descartada por decisión del dueño (mismo motivo que la 16: uso breve, sin necesidad de persistir ni compartir la partida).
 - [x] **18. Menos ruido** (aprobado con antes/después): la nota de fuente del ranking solo en el paso 4; en el detalle, una propia ("Aperturas y consejos resumidos de los artículos de Arun Murali (BGG, 2021). Es una guía, no una garantía."); fuera el párrafo del paso 3 que repetía el subtítulo.
+- [x] **19. Chaflán** (aprobado con antes/después): chips de puntuación, tarjetas de color y marco del ranking con `gf-chamfer` (chamfer-md) en vez de `radius-md`; marco del color del borde + cara 1 px más chica para que el borde siga la diagonal; en los chips el botón no se recorta (foco y brillo con drop-shadow). Sin cambios de altura.
 - [x] **10. CSP y referrer por `<meta>`**: `config/csp.js` (con tests) la inserta solo en el build, después del `charset`; política sin `unsafe-inline` ni comodines; `referrer` en `no-referrer`. Sin `upgrade-insecure-requests` (Pages ya fuerza HTTPS y rompía las pruebas locales). Verificado en Chrome: cero violaciones en todo el recorrido, fuentes e íconos cargan, y un script inline de control queda bloqueado.

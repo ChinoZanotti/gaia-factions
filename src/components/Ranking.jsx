@@ -29,7 +29,8 @@ export default function Ranking({ list, state, onPick }) {
   return (
     <>
       {/* role="list" explícito: Safari/VoiceOver quita la semántica de lista cuando hay list-style: none. */}
-      <ol className="gp-rank-wrap" role="list" aria-label="Ranking de facciones" ref={ref}>
+      <div className="gp-rank-frame gf-chamfer">
+      <ol className="gp-rank-wrap gf-chamfer" role="list" aria-label="Ranking de facciones" ref={ref}>
         {list.map((r, i) => {
           const f = FBY[r.id], adj = rowAdjust(r), pos = i + 1;
           const reason = reasonFor(r, baseOrder[r.id], state.players, factionName, ties[r.id]);
@@ -56,6 +57,7 @@ export default function Ranking({ list, state, onPick }) {
           );
         })}
       </ol>
+      </div>
       <p className="gp-sr-only" role="status" aria-live="polite" aria-atomic="true">{announcement}</p>
     </>
   );
