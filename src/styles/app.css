@@ -35,7 +35,7 @@ button { font: inherit; }
 .gp-seg .gf-seg__opt { flex: 1; height: 60px; font-size: 24px; }
 .gp-seg .gf-seg__opt small { display: block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; opacity: .8; line-height: 12px; }
 .gp-switch { min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; }
-.gp-switch .gf-switch { width: 100%; justify-content: space-between; flex-direction: row-reverse; font-size: 15px; line-height: 20px; }
+.gp-switch .gf-switch { width: 100%; min-height: 44px; justify-content: space-between; flex-direction: row-reverse; font-size: 15px; line-height: 20px; }
 
 /* scoring chips */
 .gp-chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -80,14 +80,17 @@ button { font: inherit; }
 .gp-row--off .gf-meter-wrap { display: none; }
 .gp-rank-wrap { margin: 0; padding: 0; list-style: none; border: 1px solid var(--surface-300); border-radius: var(--radius-md); overflow: hidden; }
 .gp-rank-wrap li:last-child .gp-row { border-bottom: 0; }
-.gp-sum { display: flex; flex-wrap: wrap; gap: 8px; }
-.gp-sum button { all: unset; cursor: pointer; }
+/* cada badge del resumen es un botón de 44 px de alto; entre renglones no hace falta más espacio */
+.gp-sum { display: flex; flex-wrap: wrap; gap: 0 8px; }
+.gp-sum button { all: unset; cursor: pointer; min-height: 44px; display: inline-flex; align-items: center; }
 .gp-hint { display: flex; gap: 8px; align-items: center; color: var(--ink-muted); font-size: 14px; line-height: 20px; }
 
 /* solo para lectores de pantalla (región viva del ranking) */
 .gp-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
 
 /* detail */
+/* pestañas del sistema de diseño (40 px) llevadas a 44 px sin tocar el bundle */
+.gp-app .gf-tab { box-sizing: border-box; min-height: 44px; display: inline-flex; align-items: center; }
 .gp-hero { display: flex; gap: 14px; align-items: center; }
 .gp-hero .gf-planet__orb { --s: 64px; }
 .gp-hero h2 { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 28px; line-height: 32px; color: var(--ink); }
