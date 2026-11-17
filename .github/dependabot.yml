@@ -7,6 +7,17 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    groups:
+      # react y react-dom se actualizan siempre juntos (uno solo rompe la app).
+      react:
+        patterns: ["react", "react-dom"]
+    ignore:
+      # Saltos mayores de React se hacen a mano: el bundle del sistema de diseño es para React 18.
+      # Ver tareas.md (migración a React 19).
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
