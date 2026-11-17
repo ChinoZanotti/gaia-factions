@@ -48,8 +48,8 @@ const byFaction = (patch) => Object.fromEntries(rows(patch).map((x) => [x.r.id, 
 test('rowLabel: nombre, puesto, puntaje, motivo y ajuste con signo en palabras', () => {
   const x = byFaction({ scorings: ['planet', 'sat'], rivals: ['taklons'] });
   assert.equal(x.lantids.label, 'Lantids, puesto ' + x.lantids.pos + ', puntaje ' + Math.round(x.lantids.r.score)
-    + '. Cuidado: los Taklons crecen con tu carga de poder, poco encaje con estas puntuaciones finales. Ajuste por tus datos: menos 12.');
-  assert.match(x.geodens.label, /Ajuste por tus datos: más 7\.$/);
+    + '. Cuidado: los Taklons crecen con tu carga de poder, poco encaje con estas puntuaciones finales. Ajuste por tus datos: menos 13.');
+  assert.match(x.geodens.label, /Ajuste por tus datos: más 8\.$/);
 });
 test('rowLabel: sin ajuste no menciona ajuste; no disponible no da puesto ni puntaje', () => {
   const x = byFaction({ rivals: ['taklons'] });

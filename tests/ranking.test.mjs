@@ -62,9 +62,20 @@ test('base: el mejor vale 86 y el peor 34', () => {
 test('sin puntuaciones ni rivales el puntaje es la base', () => {
   for (const r of D.rank(base)) { assert.equal(r.finalAdj, 0); assert.equal(r.rivalAdj, 0); assert.equal(r.score, r.base); }
 });
-test('ajuste de puntuación final = (promedio − 50) × 0.28', () => {
+test('ajuste de puntuación final = (promedio − 50) × 0.28 × peso de la facción', () => {
   const r = byId({ scorings: ['planet', 'sat'] });
-  assert.ok(Math.abs(r.geodens.finalAdj - ((97 + 55) / 2 - 50) * 0.28) < 1e-9);
+  assert.ok(Math.abs(r.geodens.finalAdj - ((97 + 55) / 2 - 50) * 0.28 * 1.15) < 1e-9);
+  assert.ok(Math.abs(r.ivits.finalAdj - ((40 + 15) / 2 - 50) * 0.28 * 0.64) < 1e-9);
+});
+test('peso de la puntuación final: 14 facciones, promedio ≈ 1, Ivits el menor (0,64)', () => {
+  const w = D.FINAL_WEIGHT, v = D.IDS.map((id) => w[id]);
+  assert.ok(v.every((x) => x > 0.5 && x < 1.5));
+  assert.ok(Math.abs(v.reduce((a, b) => a + b, 0) / v.length - 1) < 0.01);
+  assert.equal(Math.min(...v), w.ivits);
+  assert.equal(w.ivits, 0.64);
+});
+test('Ivits: con Tipos + Satélites (4p, Con experiencia) queda 2.º, detrás de Taklons', () => {
+  assert.deepEqual(order({ level: 'experienced', scorings: ['planet', 'sat'] }).slice(0, 3), ['taklons', 'ivits', 'itars']);
 });
 test('Tipos de planeta sube a Geodens y baja a Terrans', () => {
   const o0 = order({}), o1 = order({ scorings: ['planet'] });

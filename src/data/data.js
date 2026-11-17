@@ -113,6 +113,13 @@ var FINAL = {
   ivits:           {gaia:40, planet:40, struct:15, fed:15, sat:15, sector:10}
 };
 
+// Cuánto le importa a cada facción la puntuación final (ESTIMADO, cálculo propio). FINAL dice cuánto aprovecha la facción
+// cada categoría cuando gana, no si gana más o menos con ella; este peso escala su ajuste según cuánto separa la puntuación
+// final al ganador del último con esa facción. Fuente: tablas "Rank 1" y "Rank 4" del artículo 02 (4p, sin filtro de elo):
+// peso = (puntos de punt. final del 1.º − del 4.º) / (ventaja total del 1.º sobre el 4.º), dividido por el promedio de las
+// 14 facciones (19,8 %). Ivits: +8 de +63 (13 %) → 0,64; es la facción a la que menos define la puntuación final.
+var FINAL_WEIGHT = {ambas:1.01, 'bal-taks':0.99, bescods:1.13, firaks:1.04, geodens:1.15, gleens:1.16, 'hadsch-hallas':1.04, itars:0.83, ivits:0.64, lantids:1.03, nevlas:0.98, taklons:0.95, terrans:0.99, xenos:1.04};
+
 // Ajustes por rival (negativo = esa facción sufre cuando ese rival está en la mesa).
 var RIVAL = {
   taklons: { gleens: -4, lantids: -4, ambas: -2, xenos: -2 },
@@ -297,7 +304,7 @@ function baseScores(players, auction, level) {
 function finalAdj(id, scorings) {
   if (!scorings || scorings.length === 0) return 0;
   var s = 0; scorings.forEach(function (k) { s += FINAL[id][k]; });
-  return (s / scorings.length - 50) * 0.28;
+  return (s / scorings.length - 50) * 0.28 * FINAL_WEIGHT[id];
 }
 function rivalAdj(id, rivals) {
   var s = 0, why = [];
@@ -345,4 +352,4 @@ function rank(state) {
   return list;
 }
 
-export { IDS, RANK, RANK_BY_LEVEL, LEVELS, DEFAULT_LEVEL, GAMES, SCORINGS, FINAL, COLORS, GUIDE, RIVAL_WHY, rank, colorOf, baseScores, sampleNote, sourceOf };
+export { IDS, RANK, RANK_BY_LEVEL, LEVELS, DEFAULT_LEVEL, GAMES, SCORINGS, FINAL, FINAL_WEIGHT, COLORS, GUIDE, RIVAL_WHY, rank, colorOf, baseScores, sampleNote, sourceOf };

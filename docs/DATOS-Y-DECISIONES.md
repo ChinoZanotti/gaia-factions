@@ -9,16 +9,41 @@ Serie "Navigating through Statistics" de Arun Murali (BGG, sept–oct 2021, dato
 - `RANK[jugadores][free|auction]` (= nivel Competitivo): "Avg. Rank Without Bid" (free) y "Avg. Rank" (auction) en la columna de mayor nivel: 4p = >300 elo, min score 120; 2p y 3p = >250 elo, min score 120. Menor es mejor. Fuente: tablas del artículo 01 (imágenes en tablas/01-tier-list-facciones/). Los 84 valores están verificados contra las imágenes ampliadas (noviembre de 2026) y fijados en `tests/ranking.test.mjs`; se corrigió Ambas en 3p sin subasta (estaba 2,05; la tabla dice 2,12: no cambia el orden, su puntaje base baja de 55 a 49).
 - `RANK_BY_LEVEL[nivel]` y `GAMES[nivel]`: rango promedio y partidas por facción para cada nivel de la mesa (ver "Nivel de la mesa").
 - `FINAL[facción][puntuación]`: calificación 0–100 de "qué tan seguido logra buen puntaje en esa puntuación final cuando gana". NO son datos del autor: sus ratings reales están en una hoja de Google que no pudimos abrir. Los valores son ESTIMACIONES derivadas del texto del artículo 03 (solo hay valores exactos citados: Geoden Tipos de planeta 97, Terrans Tipos 9, Bal T'aks Estructuras 47). Mejora pendiente: reemplazar por los números reales de la hoja (hay hojas por 2p/3p/4p y por pares de puntuaciones).
+- `FINAL_WEIGHT[facción]`: cuánto le importa la puntuación final a cada facción (ESTIMADO, cálculo propio; ver "Peso de la puntuación final").
 - `RIVAL`: ajustes por rival (criterio propio, basado en observaciones del autor): Taklons/Nevlas crecen con carga de poder → penalizan a Gleens/Lantids (−4) y Ambas/Xenos (−2); Ambas penaliza Gleens (−3, riesgo de aislamiento); Xenos Gleens (−2). Tope total −8.
 - `GUIDE`: aperturas estándar y consejos por facción, resumidos del artículo 04a/04b y 03/02. Notación PI/AC/RL/TS/M explicada en la app.
 - `COLORS`: 7 colores de planeta, 2 facciones cada uno; elegir una bloquea la otra.
 
 ## Motor (rank())
 1. Base = 86 − 52 × (rango − min)/(max − min) por tabla (2/3/4 jugadores; con o sin subasta; nivel de la mesa).
-2. Ajuste de puntuaciones finales = (promedio de las calificaciones de las 2 elegidas − 50) × 0.28.
+2. Ajuste de puntuaciones finales = (promedio de las calificaciones de las 2 elegidas − 50) × 0.28 × `FINAL_WEIGHT` de la facción.
 3. Ajuste de rivales = suma de RIVAL, tope −8.
 4. Puntaje final limitado a 0–100. Facciones cuyo color ya está ocupado (por rival o marcado a mano) van al final como "No".
 5. Empates: si dos facciones disponibles muestran el mismo puntaje redondeado, el motivo dice "empata con X". A igual puntaje el orden entre ellas es arbitrario (orden interno de la lista).
+
+## Peso de la puntuación final (noviembre de 2026)
+**Problema.** La calificación del artículo 03 (base de `FINAL`) es "el % de las partidas que la facción gana en las que sacó buen puntaje en esa categoría": mide cuánto la aprovecha cuando gana, no si gana más o menos cuando esa categoría está en juego. Usarla como ajuste de fuerza penaliza a las facciones que ganan sin puntuación final. El caso extremo es Ivits: el autor dice que "no necesita la puntuación final" (artículos 02 y 03), pero el motor le restaba hasta −6.
+
+**Dato usado.** Tablas "Rank 1" y "Rank 4" del artículo 02 (4p, sin filtro de elo): puntos promedio por categoría del jugador que gana y del que sale último con cada facción. Para cada facción, parte de la ventaja total del 1.º sobre el 4.º que viene de la puntuación final:
+
+| Facción | Punt. final 1.º / 4.º | Diferencia | Parte de la ventaja | Peso |
+|---|---|---|---|---|
+| Ivits | 16 / 8 | +8 | 13 % | 0,64 |
+| Itars | 23 / 12 | +11 | 16 % | 0,83 |
+| Taklons | 28 / 15 | +13 | 19 % | 0,95 |
+| Nevlas | 24 / 12 | +12 | 19 % | 0,98 |
+| Bal T'aks · Terrans | 21 / 11 · 27 / 14 | +10 · +13 | 20 % | 0,99 |
+| Ambas | 27 / 15 | +12 | 20 % | 1,01 |
+| Lantids | 24 / 13 | +11 | 20 % | 1,03 |
+| Firaks · Hadsch Hallas · Xenos | 22 / 10 · 23 / 11 · 22 / 10 | +12 | 21 % | 1,04 |
+| Bescods | 23 / 10 | +13 | 22 % | 1,13 |
+| Geoden · Gleens | 25 / 12 · 23 / 11 | +13 · +12 | 23 % | 1,15 · 1,16 |
+
+Peso = parte de la ventaja / promedio de las 14 (19,8 %). Para Ivits lo que más separa al ganador del último son las losetas avanzadas (+14), no la puntuación final.
+
+**Efecto** (270 combinaciones de jugadores, subasta, nivel y par de puntuaciones, sin rivales): cambia algo del orden en 172, casi siempre intercambios entre vecinos (máximo 3 puestos); el top 3 cambia en 83, 65 de ellas por Ivits, que sube en 90 combinaciones y no baja en ninguna. Sin puntuaciones elegidas el ranking no cambia.
+
+**Límites.** La tabla mezcla todas las combinaciones de puntuación final y todos los niveles, y es una correlación (los ganadores puntúan más en todo). El dato definitivo sería el rango de cada facción según la combinación de puntuaciones (hoja de Google del artículo 03). Los valores de "Encaje" del detalle no cambian: describen cuánto puntúa la facción ahí, no cuánto le afecta.
 
 ## Nivel de la mesa (noviembre de 2026)
 El paso 1 ("La mesa") pide jugadores, experiencia de la mesa y subasta. La experiencia elige qué tabla de rango promedio usa el motor; los ajustes de puntuación final (`FINAL`) y de rivales (`RIVAL`) y las aperturas (`GUIDE`) son los mismos para los tres niveles.
