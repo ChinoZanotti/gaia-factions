@@ -101,6 +101,10 @@ button { font: inherit; }
 .gp-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
 
 /* detail */
+/* botón de copiar: tamaño base del sistema (32 px) llevado a 44 px; queda por debajo del primary (52 px) */
+.gp-copy .gf-btn__face { height: 44px; font-size: 14px; }
+.gp-copy__text { box-sizing: border-box; width: 100%; font-variant-ligatures: none; height: 40vh; margin-top: var(--space-3); padding: var(--space-3); resize: vertical; font-family: var(--font-body); font-size: 14px; line-height: 20px; color: var(--ink); background: var(--surface-200); border: 1px solid var(--frame); border-radius: var(--radius-sm); }
+.gp-copy__text:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 /* pestañas del sistema de diseño (40 px) llevadas a 44 px sin tocar el bundle */
 .gp-app .gf-tab { box-sizing: border-box; min-height: 44px; display: inline-flex; align-items: center; }
 .gp-hero { display: flex; gap: 14px; align-items: center; }

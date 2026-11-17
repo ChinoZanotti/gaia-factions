@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Badge, DIFFICULTY, Icon, Meter, Panel, PlanetToken, Tabs } from '../design-system';
 import { FINAL, GUIDE, SCORINGS, colorOf } from '../data/data.js';
 import { CBY, FBY, SBY } from '../lookups.js';
+import CopyGuide from './CopyGuide.jsx';
 
 const GLOSSARY = [
   ['PI', 'Instituto Planetario'], ['AC', 'Academia'], ['RL', 'Laboratorio de investigación'], ['TS', 'Puesto comercial'],
@@ -96,6 +97,7 @@ export default function Detail({ id, pos, state, list }) {
         </div>
       </div>
       <p className="gp-p" style={{ marginTop: 0 }}>{f.summary}</p>
+      <CopyGuide name={f.name} guide={g} />
       <Tabs label="Secciones" tabs={tabs} value={tab} onChange={setTab} />
       {tab === 'open' ? <Openings g={g} /> : tab === 'tips' ? <Tips g={g} /> : <Fit id={id} scorings={state.scorings} />}
     </div>
