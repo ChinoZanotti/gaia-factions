@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Badge, Meter, PlanetToken } from '../design-system';
+import { Badge, Icon, Meter, PlanetToken } from '../design-system';
 import useFlip from '../hooks/useFlip.js';
 import { baseRankOrder, reasonFor, rowAdjust, rowLabel, tiesOf, topSummary } from '../lib/reasons.js';
 import { FBY, factionName } from '../lookups.js';
@@ -50,6 +50,7 @@ export default function Ranking({ list, state, onPick }) {
                     : adj !== 0 ? <Badge tone={adj > 0 ? 'success' : 'danger'} icon={adj > 0 ? 'plus' : 'minus'}>{Math.abs(adj)}</Badge> : null}
                 </div>
                 <Meter value={Math.round(r.score)} label={'Puntaje ' + f.name} />
+                <Icon name="chevron-right" className="gp-row__chev" />
               </button>
             </li>
           );

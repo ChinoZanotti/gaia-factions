@@ -79,12 +79,15 @@ button { font: inherit; }
 
 /* ranking */
 .gp-rank { position: relative; display: flex; flex-direction: column; gap: 0; }
-.gp-row { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; display: grid !important; grid-template-columns: 30px 32px 1fr auto; grid-template-areas: "pos orb name delta" ". bar bar bar"; column-gap: 12px; row-gap: 6px; align-items: center; padding: 12px 12px; min-height: 64px; background: var(--surface-100); border-bottom: 1px solid var(--surface-300); -webkit-tap-highlight-color: transparent; will-change: transform; }
+.gp-row { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; display: grid !important; grid-template-columns: 30px 32px 1fr auto 16px; grid-template-areas: "pos orb name delta chev" ". bar bar bar chev"; column-gap: 12px; row-gap: 6px; align-items: center; padding: 12px 12px; min-height: 64px; background: var(--surface-100); border-bottom: 1px solid var(--surface-300); -webkit-tap-highlight-color: transparent; will-change: transform; }
 .gp-row:active { background: var(--surface-200); }
 .gp-row .gf-rank__pos { grid-area: pos; font-size: 20px; }
 .gp-row .gf-planet { grid-area: orb; }
 .gp-row__name { grid-area: name; min-width: 0; }
 .gp-row__delta { grid-area: delta; }
+/* flecha: indica que la fila abre el detalle (gráfico, tono tenue) */
+.gp-row__chev { grid-area: chev; width: 16px; height: 16px; color: var(--ink-subtle); }
+.gp-legend { margin: calc(-1 * var(--space-2)) 0 0; }
 .gp-row .gf-meter-wrap { grid-area: bar; }
 .gp-row .gf-meter__val { font-size: 16px; }
 .gp-row--top { background: linear-gradient(100deg, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%), var(--surface-100); }

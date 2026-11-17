@@ -17,7 +17,6 @@ Completa (ver "Hechas").
 
 ### Prioridad 3 — Decisiones de producto o diseño
 
-- [ ] **15. Descubribilidad** (Molly). Chevrón en las filas, pista "Tocá una facción" en todos los pasos, leyenda del +N/−N.
 - [ ] **17. Compartir partida por enlace** (Case). Estado en el fragmento `#` (no en la query), mismo validador que la 16, formato versionado, tope de longitud, si falla vuelve al estado inicial.
 - [ ] **18. Menos ruido** (Molly). Nota de fuentes solo en el paso 4 y en el detalle; quitar el párrafo repetido del paso 3.
 - [ ] **19. Chaflán o borde redondeado** en chips, colores y ranking (Molly). Hoy usan `radius-md` en vez de la firma del sistema: aplicar chaflán o documentar la excepción.
@@ -70,4 +69,5 @@ Completa (ver "Hechas").
 - [x] **14. Paso 4** (decisión del dueño; aprobado con antes/después): "Nueva partida" sigue en la barra, sin primary; al tocarla aparece "Empezaste una partida nueva. [Deshacer]" (Toast del sistema, 6 s) que recupera la partida y vuelve al paso 4; el aviso se va si se empieza a cargar la nueva.
 - [x] ~~**16. Guardar partida en localStorage**~~: descartada por decisión del dueño. La app se usa un rato al elegir facciones y para consultas sueltas de una facción; no hace falta persistir la partida.
 - [x] **CI: auditoría por tipo de dependencia** (decisión del dueño): `npm audit --omit=dev` bloquea el deploy (lo que llega al navegador); el audit completo queda informativo. Motivo: GHSA-fc5q-39xc-vjpf (picomatch, ReDoS, sin versión corregida) solo afecta a vite al compilar y frenaba toda publicación. Cuando salga la corrección, Dependabot la propone.
+- [x] **15. Descubribilidad** (prototipo aprobado con antes/después, textos cortos): flecha `›` en cada fila del ranking (oculta a lectores de pantalla: la fila ya se anuncia como botón); pista de los pasos 1–3 "Ranking en vivo: tocá una facción para ver su detalle."; leyenda "+N / −N: ajuste por puntuaciones finales y rivales." solo cuando hay ajustes. Un renglón cada texto a 390 px.
 - [x] **10. CSP y referrer por `<meta>`**: `config/csp.js` (con tests) la inserta solo en el build, después del `charset`; política sin `unsafe-inline` ni comodines; `referrer` en `no-referrer`. Sin `upgrade-insecure-requests` (Pages ya fuerza HTTPS y rompía las pruebas locales). Verificado en Chrome: cero violaciones en todo el recorrido, fuentes e íconos cargan, y un script inline de control queda bloqueado.

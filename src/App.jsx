@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Button, IconButton, Logo, Toast } from './design-system';
 import { DEFAULT_LEVEL, rank, sampleNote, sourceOf } from './data/data.js';
 import { FBY } from './lookups.js';
+import { rowAdjust } from './lib/reasons.js';
 import Detail from './components/Detail.jsx';
 import LiveHint from './components/LiveHint.jsx';
 import Ranking from './components/Ranking.jsx';
@@ -91,7 +92,7 @@ export default function App() {
         {step === 2 && <StepRivals state={state} set={set} />}
         {step === 3 && <Summary state={state} go={go} />}
         <SampleNote note={sampleNote(state.players, state.level)} />
-        <LiveHint step={step} />
+        <LiveHint step={step} showLegend={list.some((r) => !r.unavailable && rowAdjust(r) !== 0)} />
         <Ranking list={list} state={state} onPick={openDetail} />
         <p className="gp-note">{'Basado en las estadísticas de Arun Murali (BGG, 2021): ' + sourceOf(state.players, state.level) + '. Es una guía, no una garantía: el mapa y las losetas también cuentan.'}</p>
       </>
