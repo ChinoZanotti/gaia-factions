@@ -40,7 +40,6 @@ export default function StepRivals({ state, set }) {
           </div>
         );
       })}
-      <p className="gp-note">Tocá el nombre del color para marcarlo ocupado sin saber qué facción es. Tocá una facción para marcar que la eligió un rival.</p>
     </div>
   );
 }

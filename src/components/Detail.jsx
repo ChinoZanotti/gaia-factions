@@ -100,6 +100,7 @@ export default function Detail({ id, pos, state, list }) {
       <CopyGuide name={f.name} guide={g} />
       <Tabs label="Secciones" tabs={tabs} value={tab} onChange={setTab} />
       {tab === 'open' ? <Openings g={g} /> : tab === 'tips' ? <Tips g={g} /> : <Fit id={id} scorings={state.scorings} />}
+      <p className="gp-note">Aperturas y consejos resumidos de los artículos de Arun Murali (BGG, 2021). Es una guía, no una garantía.</p>
     </div>
   );
 }

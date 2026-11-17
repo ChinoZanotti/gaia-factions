@@ -17,8 +17,6 @@ Completa (ver "Hechas").
 
 ### Prioridad 3 — Decisiones de producto o diseño
 
-- [ ] **17. Compartir partida por enlace** (Case). Estado en el fragmento `#` (no en la query), mismo validador que la 16, formato versionado, tope de longitud, si falla vuelve al estado inicial.
-- [ ] **18. Menos ruido** (Molly). Nota de fuentes solo en el paso 4 y en el detalle; quitar el párrafo repetido del paso 3.
 - [ ] **19. Chaflán o borde redondeado** en chips, colores y ranking (Molly). Hoy usan `radius-md` en vez de la firma del sistema: aplicar chaflán o documentar la excepción.
 - [ ] **20. Pestañas con flechas del teclado** (Molly). Lo implementa el bundle: anotar como deuda del sistema de diseño, no parchear desde la app.
 - [ ] **24. Migrar a React 19.** Dependabot ignora los saltos mayores de React hasta hacerlo a mano: probar el bundle del sistema de diseño con React 19 y actualizar `react` y `react-dom` juntos.
@@ -70,4 +68,6 @@ Completa (ver "Hechas").
 - [x] ~~**16. Guardar partida en localStorage**~~: descartada por decisión del dueño. La app se usa un rato al elegir facciones y para consultas sueltas de una facción; no hace falta persistir la partida.
 - [x] **CI: auditoría por tipo de dependencia** (decisión del dueño): `npm audit --omit=dev` bloquea el deploy (lo que llega al navegador); el audit completo queda informativo. Motivo: GHSA-fc5q-39xc-vjpf (picomatch, ReDoS, sin versión corregida) solo afecta a vite al compilar y frenaba toda publicación. Cuando salga la corrección, Dependabot la propone.
 - [x] **15. Descubribilidad** (prototipo aprobado con antes/después, textos cortos): flecha `›` en cada fila del ranking (oculta a lectores de pantalla: la fila ya se anuncia como botón); pista de los pasos 1–3 "Ranking en vivo: tocá una facción para ver su detalle."; leyenda "+N / −N: ajuste por puntuaciones finales y rivales." solo cuando hay ajustes. Un renglón cada texto a 390 px.
+- [x] ~~**17. Compartir partida por enlace**~~: descartada por decisión del dueño (mismo motivo que la 16: uso breve, sin necesidad de persistir ni compartir la partida).
+- [x] **18. Menos ruido** (aprobado con antes/después): la nota de fuente del ranking solo en el paso 4; en el detalle, una propia ("Aperturas y consejos resumidos de los artículos de Arun Murali (BGG, 2021). Es una guía, no una garantía."); fuera el párrafo del paso 3 que repetía el subtítulo.
 - [x] **10. CSP y referrer por `<meta>`**: `config/csp.js` (con tests) la inserta solo en el build, después del `charset`; política sin `unsafe-inline` ni comodines; `referrer` en `no-referrer`. Sin `upgrade-insecure-requests` (Pages ya fuerza HTTPS y rompía las pruebas locales). Verificado en Chrome: cero violaciones en todo el recorrido, fuentes e íconos cargan, y un script inline de control queda bloqueado.

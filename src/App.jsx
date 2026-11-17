@@ -94,7 +94,8 @@ export default function App() {
         <SampleNote note={sampleNote(state.players, state.level)} />
         <LiveHint step={step} showLegend={list.some((r) => !r.unavailable && rowAdjust(r) !== 0)} />
         <Ranking list={list} state={state} onPick={openDetail} />
-        <p className="gp-note">{'Basado en las estadísticas de Arun Murali (BGG, 2021): ' + sourceOf(state.players, state.level) + '. Es una guía, no una garantía: el mapa y las losetas también cuentan.'}</p>
+        {/* Nota de fuente solo en el ranking final (paso 4); en el detalle va una propia. */}
+        {step === 3 && <p className="gp-note">{'Basado en las estadísticas de Arun Murali (BGG, 2021): ' + sourceOf(state.players, state.level) + '. Es una guía, no una garantía: el mapa y las losetas también cuentan.'}</p>}
       </>
     );
 
