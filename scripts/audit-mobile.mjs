@@ -14,16 +14,23 @@ fs.mkdirSync(OUT, { recursive: true });
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'gaia-audit-'));
 try { await fetch(URL_); } catch { console.error('No responde ' + URL_ + ': levantá el servidor primero.'); process.exit(1); }
 
-const chrome = spawn(CHROME, ['--headless=new', '--remote-debugging-port=9333', '--user-data-dir=' + profile, '--no-first-run', '--hide-scrollbars', 'about:blank'], { stdio: 'ignore' });
+// Puerto de depuración 0: Chrome elige uno libre y lo escribe en <perfil>/DevToolsActivePort.
+// Así nunca se conecta por error a otro proceso que escuche en un puerto fijo.
+const chrome = spawn(CHROME, ['--headless=new', '--remote-debugging-port=0', '--user-data-dir=' + profile, '--no-first-run', '--hide-scrollbars', 'about:blank'], { stdio: 'ignore' });
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 let ws, id = 0; const pend = new Map(); const logs = [];
 async function connect() {
+  const portFile = path.join(profile, 'DevToolsActivePort');
   for (let i = 0; i < 50; i++) {
-    try { const l = await (await fetch('http://127.0.0.1:9333/json/list')).json(); const p = l.find((t) => t.type === 'page'); if (p) return p.webSocketDebuggerUrl; } catch {}
+    try {
+      const port = Number(fs.readFileSync(portFile, 'utf8').split('\n')[0]);
+      const l = await (await fetch('http://127.0.0.1:' + port + '/json/list')).json();
+      const p = l.find((t) => t.type === 'page'); if (p) return p.webSocketDebuggerUrl;
+    } catch {}
     await wait(200);
   }
-  throw new Error('no chrome');
+  throw new Error('Chrome no abrió el puerto de depuración');
 }
 function send(method, params = {}) {
   return new Promise((res, rej) => { const i = ++id; pend.set(i, { res, rej }); ws.send(JSON.stringify({ id: i, method, params })); });
@@ -84,5 +91,9 @@ try {
   console.log(JSON.stringify(report, null, 1));
 } finally {
   try { ws && ws.close(); } catch {}
+  // Esperar a que Chrome cierre (en Windows bloquea el perfil) y borrar el perfil temporal.
+  const exited = new Promise((r) => chrome.once('exit', r));
   chrome.kill();
+  await Promise.race([exited, wait(5000)]);
+  for (let i = 0; i < 10; i++) { try { fs.rmSync(profile, { recursive: true, force: true }); break; } catch { await wait(300); } }
 }
