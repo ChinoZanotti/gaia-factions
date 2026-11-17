@@ -1,5 +1,5 @@
-import { useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Button, IconButton, Logo } from './design-system';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { Button, IconButton, Logo, Toast } from './design-system';
 import { DEFAULT_LEVEL, rank, sampleNote, sourceOf } from './data/data.js';
 import { FBY } from './lookups.js';
 import Detail from './components/Detail.jsx';
@@ -18,12 +18,19 @@ const STEPS = [
   { t: 'Ranking', h: 'Tu ranking', p: 'Tocá una facción para ver sus aperturas y consejos.' },
 ];
 const INITIAL = { players: 4, auction: false, level: DEFAULT_LEVEL, scorings: [], rivals: [], blocked: [] };
+const UNDO_MS = 6000; // cuánto queda disponible "Deshacer" después de "Nueva partida"
 
 export default function App() {
   const [state, setState] = useState(INITIAL);
   const [step, setStep] = useState(0);
   const [pick, setPick] = useState(null);
-  const set = (patch) => setState({ ...state, ...patch });
+  // "Nueva partida" con Deshacer: se guarda la partida anterior unos segundos. Si el usuario empieza a cargar la nueva,
+  // el aviso se va (deshacer no debe pisar lo que acaba de elegir).
+  const [undo, setUndo] = useState(null); // { state, step } de la partida anterior
+  const undoTimer = useRef(null);
+  const clearUndo = () => { clearTimeout(undoTimer.current); setUndo(null); };
+  useEffect(() => () => clearTimeout(undoTimer.current), []);
+  const set = (patch) => { if (undo) clearUndo(); setState({ ...state, ...patch }); };
   const go = (n) => { setStep(n); setPick(null); window.scrollTo(0, 0); };
   const list = useMemo(() => rank(state), [state]);
   const inDetail = !!pick;
@@ -90,15 +97,36 @@ export default function App() {
       </>
     );
 
+  function newGame() {
+    clearTimeout(undoTimer.current);
+    setUndo({ state, step });
+    undoTimer.current = setTimeout(() => setUndo(null), UNDO_MS);
+    setState(INITIAL);
+    go(0);
+  }
+  function undoNewGame() {
+    const prev = undo;
+    clearUndo();
+    setState(prev.state);
+    go(prev.step);
+  }
+
   let action;
   if (inDetail) action = <Button size="lg" block onClick={closeDetail}>Volver al ranking</Button>;
   else if (step < 3) action = <Button size="lg" block iconRight="arrow-right" onClick={() => go(step + 1)}>{step === 2 ? 'Ver ranking final' : 'Siguiente'}</Button>;
-  else action = <Button size="lg" block variant="secondary" icon="shuffle" onClick={() => { setState(INITIAL); go(0); }}>Nueva partida</Button>;
+  else action = <Button size="lg" block variant="secondary" icon="shuffle" onClick={newGame}>Nueva partida</Button>;
 
   return (
     <div className="gp-app">
       {head}
       <main className="gp-main">{main}</main>
+      {undo && (
+        <div className="gp-undo">
+          <Toast title="Empezaste una partida nueva.">
+            <Button variant="secondary" onClick={undoNewGame}>Deshacer</Button>
+          </Toast>
+        </div>
+      )}
       <div className="gp-bar"><div className="gp-bar__in">{action}</div></div>
     </div>
   );

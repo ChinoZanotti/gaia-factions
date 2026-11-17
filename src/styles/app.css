@@ -30,6 +30,13 @@ button { font: inherit; }
 .gp-bar__in .gf-btn--primary { flex: 1; }
 .gp-bar .gf-btn__face { height: 52px; font-size: 15px; }
 
+/* aviso "Deshacer" tras "Nueva partida": fijo encima de la barra inferior (52 px de botón + 12 + 12 de relleno) */
+.gp-undo { position: fixed; z-index: 30; left: max(16px, env(safe-area-inset-left)); right: max(16px, env(safe-area-inset-right)); bottom: calc(env(safe-area-inset-bottom) + 88px); display: flex; justify-content: center; }
+.gp-undo .gf-toast { width: 100%; max-width: 528px; align-items: center; box-shadow: var(--shadow-panel); }
+.gp-undo .gf-toast > div { display: flex; flex: 1; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.gp-undo .gf-toast__msg { flex: none; }
+.gp-undo .gf-btn__face { height: 44px; font-size: 14px; }
+
 /* segmented players */
 .gp-seg { display: flex; width: 100%; }
 .gp-seg .gf-seg__opt { flex: 1; height: 52px; font-size: 24px; }

@@ -17,9 +17,7 @@ Completa (ver "Hechas").
 
 ### Prioridad 3 — Decisiones de producto o diseño
 
-- [ ] **14. Paso 4** (Molly). Proteger "Nueva partida" (confirmación o "Deshacer" con `Toast`) y definir un primary útil (p. ej. "Ver la #1").
 - [ ] **15. Descubribilidad** (Molly). Chevrón en las filas, pista "Tocá una facción" en todos los pasos, leyenda del +N/−N.
-- [ ] **16. Guardar partida en localStorage** (Molly, Case). Con validador por allowlist desde el día 1, clave con prefijo (`gaia-factions:v1:…`), `try/catch` en `JSON.parse`, lookups con `Object.hasOwn` o `Map`.
 - [ ] **17. Compartir partida por enlace** (Case). Estado en el fragmento `#` (no en la query), mismo validador que la 16, formato versionado, tope de longitud, si falla vuelve al estado inicial.
 - [ ] **18. Menos ruido** (Molly). Nota de fuentes solo en el paso 4 y en el detalle; quitar el párrafo repetido del paso 3.
 - [ ] **19. Chaflán o borde redondeado** en chips, colores y ranking (Molly). Hoy usan `radius-md` en vez de la firma del sistema: aplicar chaflán o documentar la excepción.
@@ -69,4 +67,6 @@ Completa (ver "Hechas").
 - [x] **Peso de la puntuación final** (caso Ivits; opción b aprobada con antes/después): el ajuste por puntuación final se multiplica por un peso por facción (Ivits 0,64 … Gleens 1,16) calculado de las tablas de ganadores contra últimos del artículo 02. Documentado en `docs/DATOS-Y-DECISIONES.md`.
 - [x] **13. Paso 3**: "Ocupado"/"Libre" con el componente `Badge` (mismo aspecto); cada botón de color se anuncia como "Marcar X como ocupado", con descripción "Libre", "Ocupado por <rival>" u "Ocupado (marcado a mano)". Capturas idénticas.
 - [x] **Copiar aperturas y consejos** (pedido del dueño; ubicación y botón propuestos por Molly; aprobado con antes/después): botón secundario de 44 px entre el resumen y las pestañas del detalle; copia en texto plano el formato del dueño (sin siglas ni encaje; `src/lib/guideText.js`, con tests). Confirma con "Copiado" 2 s y región viva; si el navegador no deja copiar, ventana con el texto seleccionado.
+- [x] **14. Paso 4** (decisión del dueño; aprobado con antes/después): "Nueva partida" sigue en la barra, sin primary; al tocarla aparece "Empezaste una partida nueva. [Deshacer]" (Toast del sistema, 6 s) que recupera la partida y vuelve al paso 4; el aviso se va si se empieza a cargar la nueva.
+- [x] ~~**16. Guardar partida en localStorage**~~: descartada por decisión del dueño. La app se usa un rato al elegir facciones y para consultas sueltas de una facción; no hace falta persistir la partida.
 - [x] **10. CSP y referrer por `<meta>`**: `config/csp.js` (con tests) la inserta solo en el build, después del `charset`; política sin `unsafe-inline` ni comodines; `referrer` en `no-referrer`. Sin `upgrade-insecure-requests` (Pages ya fuerza HTTPS y rompía las pruebas locales). Verificado en Chrome: cero violaciones en todo el recorrido, fuentes e íconos cargan, y un script inline de control queda bloqueado.
