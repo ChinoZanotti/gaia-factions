@@ -17,7 +17,7 @@ Completa (ver "Hechas").
 
 ### Prioridad 3 — Decisiones de producto o diseño
 
-- [ ] **20. Pestañas con flechas del teclado** (Molly). Lo implementa el bundle: anotar como deuda del sistema de diseño, no parchear desde la app.
+- [ ] **25. Flechas del teclado desde la app** (propuesta, pendiente de decisión del dueño): con teclado no se puede cambiar jugadores, nivel ni pestañas del detalle (ver deuda del sistema en `docs/sistema-de-diseno/README.md`). Se puede resolver desde la app sin tocar el bundle: un contenedor que maneje flechas/inicio/fin, cambie la selección y mueva el foco.
 - [ ] **24. Migrar a React 19.** Dependabot ignora los saltos mayores de React hasta hacerlo a mano: probar el bundle del sistema de diseño con React 19 y actualizar `react` y `react-dom` juntos.
 
 ### Del dueño (fuera del código)
@@ -74,4 +74,5 @@ Completa (ver "Hechas").
 - [x] **Chaflán en la facción elegida (paso 3)** (observación del dueño): el borde naranja de la facción elegida por un rival pasa de sombra interior (rectangular, cortada por el chaflán de la tarjeta) a fondo naranja + cara recortada en la esquina del chaflán, así el borde sigue la diagonal. De paso, el contorno de foco de esos botones va hacia adentro (antes la tarjeta lo recortaba).
 - [x] **Marco sólido en botones y ventana** (pedido del dueño, opción B elegida entre dos): botones primary/secondary y el `Modal` pasan del cromo en degradé a `--metal-300` sólido. Documentado en el README del sistema de diseño.
 - [x] **Esquinas rectas** (decisión del dueño; reemplaza el "chaflán en todo", que se revirtió): badges, aviso Deshacer, switch (riel y perilla), barras de puntaje, puntos de progreso, aviso de muestra chica y cuadro de texto del respaldo con esquinas a 90°. Se mantiene el arreglo de los paneles del detalle (el borde de 1 px ya no se pierde en la diagonal del chaflán). Documentado en el README del sistema de diseño.
+- [x] **20. Deuda de teclado del sistema documentada**: sección "Deuda conocida del sistema (bundle)" en el README del sistema de diseño (sin flechas en SegmentedControl y Tabs —verificado: con teclado no se puede cambiar jugadores, nivel ni pestañas—, Tabs sin tabpanel, Modal sin manejo de foco, botones de cerrar de 32 px).
 - [x] **10. CSP y referrer por `<meta>`**: `config/csp.js` (con tests) la inserta solo en el build, después del `charset`; política sin `unsafe-inline` ni comodines; `referrer` en `no-referrer`. Sin `upgrade-insecure-requests` (Pages ya fuerza HTTPS y rompía las pruebas locales). Verificado en Chrome: cero violaciones en todo el recorrido, fuentes e íconos cargan, y un script inline de control queda bloqueado.
