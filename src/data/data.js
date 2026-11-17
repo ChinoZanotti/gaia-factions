@@ -11,7 +11,7 @@ var RANK = {
     auction: {nevlas:2.29, terrans:2.36, ivits:2.38, itars:2.41, taklons:2.45, firaks:2.49, 'bal-taks':2.51, geodens:2.52, ambas:2.56, xenos:2.56, lantids:2.59, bescods:2.65, 'hadsch-hallas':2.72, gleens:2.79}
   },
   3: {
-    free: {ivits:1.67, terrans:1.81, itars:1.86, taklons:1.87, nevlas:1.95, 'hadsch-hallas':1.96, firaks:2.00, ambas:2.05, xenos:2.16, geodens:2.19, bescods:2.20, 'bal-taks':2.25, lantids:2.29, gleens:2.31},
+    free: {ivits:1.67, terrans:1.81, itars:1.86, taklons:1.87, nevlas:1.95, 'hadsch-hallas':1.96, firaks:2.00, ambas:2.12, xenos:2.16, geodens:2.19, bescods:2.20, 'bal-taks':2.25, lantids:2.29, gleens:2.31},
     auction: {nevlas:1.71, terrans:1.74, ivits:1.80, taklons:1.90, firaks:1.94, 'hadsch-hallas':1.96, xenos:2.04, itars:2.12, ambas:2.12, lantids:2.15, geodens:2.16, 'bal-taks':2.19, bescods:2.21, gleens:2.31}
   },
   2: {

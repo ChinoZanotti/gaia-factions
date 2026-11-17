@@ -37,7 +37,6 @@ Completa (ver "Hechas").
 ### Backlog
 
 - [ ] Reemplazar `FINAL` con los ratings reales (hoja de Google del artículo 03), por cantidad de jugadores.
-- [ ] Verificar los rangos de 2p/3p contra las imágenes de `docs/datos/tablas/01-tier-list-facciones/` (algunos se leyeron a ojo de heatmaps).
 - [ ] Mapa (distancia a planetas del color, Gaia cercanos, sectores) y losetas de ronda/avanzadas.
 - [ ] Aperturas: separar AC de conocimiento vs QIC y mostrar con qué pista combinan (artículo 04b).
 - [ ] Tema claro (`data-theme="rulebook"`).
@@ -65,4 +64,5 @@ Completa (ver "Hechas").
 - [x] **7. Objetivos táctiles de 44 px** (aprobado con antes/después): switch de subasta (zona tocable de 24 a 44 px, sin cambio visual), badges del resumen del paso 4 (de 25 a 44 px; más separación entre renglones) y pestañas del detalle (de 40 a 44 px, override en `app.css`).
 - [x] **8. Contraste** (aprobado con antes/después): notas de `ink-subtle` a `ink-muted` (4,44 → 8,57:1); encabezado de color ocupado a `ink-muted` (4,06 → 7,83:1); filas no disponibles sin opacidad general: planeta atenuado y texto en `ink-muted` (motivo de 2,59 → 7,83:1). El botón de la otra facción de un color ocupado sigue al 40 % (funciona como deshabilitado).
 - [x] **9. Números tabulares**: cerrada sin cambios por decisión del dueño. Chakra Petch no tiene dígitos tabulares (con y sin `tabular-nums` miden lo mismo), así que la propiedad no tiene efecto.
+- [x] **Rangos de 2p/3p verificados** contra las imágenes del artículo 01 (backlog): 83 de 84 valores bien; corregido Ambas en 3p sin subasta (2,05 → 2,12; mismo orden). Test que fija los 84 valores.
 - [x] **10. CSP y referrer por `<meta>`**: `config/csp.js` (con tests) la inserta solo en el build, después del `charset`; política sin `unsafe-inline` ni comodines; `referrer` en `no-referrer`. Sin `upgrade-insecure-requests` (Pages ya fuerza HTTPS y rompía las pruebas locales). Verificado en Chrome: cero violaciones en todo el recorrido, fuentes e íconos cargan, y un script inline de control queda bloqueado.
