@@ -21,7 +21,7 @@ button { font: inherit; }
 .gp-main { flex: 1; padding: 16px max(16px, env(safe-area-inset-left)) calc(104px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-right)); display: flex; flex-direction: column; gap: 16px; }
 .gp-h { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 22px; line-height: 28px; color: var(--ink); }
 .gp-p { margin: 4px 0 0; font-size: 15px; line-height: 22px; color: var(--ink-muted); }
-.gp-note { font-size: 13px; line-height: 18px; color: var(--ink-subtle); }
+.gp-note { font-size: 13px; line-height: 18px; color: var(--ink-muted); }
 .gp-stack { display: flex; flex-direction: column; gap: 12px; }
 
 /* bottom action bar */
@@ -62,7 +62,7 @@ button { font: inherit; }
 .gp-fbtn[aria-pressed="true"] { background: color-mix(in srgb, var(--accent) 18%, var(--surface-200)); box-shadow: inset 0 0 0 2px var(--accent); }
 .gp-fbtn[aria-pressed="true"] small { color: var(--accent-ink); }
 .gp-color--off .gp-fbtn:not([aria-pressed="true"]) { opacity: .4; }
-.gp-color--off .gp-color__head { color: var(--ink-subtle); }
+.gp-color--off .gp-color__head { color: var(--ink-muted); }
 
 /* ranking */
 .gp-rank { position: relative; display: flex; flex-direction: column; gap: 0; }
@@ -76,7 +76,9 @@ button { font: inherit; }
 .gp-row .gf-meter__val { font-size: 16px; }
 .gp-row--top { background: linear-gradient(100deg, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%), var(--surface-100); }
 .gp-row--top .gf-rank__pos { color: var(--accent-ink); }
-.gp-row--off { opacity: .45; }
+/* no disponible: se atenúa el planeta (gráfico) y el texto pasa a ink-muted; la opacidad general dejaba el motivo en 2,6:1 */
+.gp-row--off .gf-planet { opacity: .45; }
+.gp-row--off .gf-rank__pos, .gp-row--off .gf-rank__name { color: var(--ink-muted); }
 .gp-row--off .gf-meter-wrap { display: none; }
 .gp-rank-wrap { margin: 0; padding: 0; list-style: none; border: 1px solid var(--surface-300); border-radius: var(--radius-md); overflow: hidden; }
 .gp-rank-wrap li:last-child .gp-row { border-bottom: 0; }

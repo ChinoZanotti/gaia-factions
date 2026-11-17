@@ -13,7 +13,6 @@ Completa (ver "Hechas").
 
 ### Prioridad 2 — Cambios visuales chicos (requieren OK)
 
-- [ ] **8. Contraste** (Molly; medido). `ink-subtle` da 4,44:1 sobre `bg-000` y 4,06:1 sobre `surface-100` (< 4,5). Pasar `.gp-note` a `ink-muted`; en `.gp-row--off` atenuar planeta y nombre, no todo el texto.
 - [ ] **9. Números tabulares** (Molly). `font-variant-numeric: tabular-nums` en los puntajes, para que no bailen durante la animación.
 - [ ] **10. CSP y referrer por `<meta>`** solo en el build, con un plugin en `vite.config.js` (Case). Verificar en la consola que no haya violaciones. Si se hace después de la 11, la política queda en `'self'`.
 - [ ] **11. Fuentes autoalojadas** (Case, Molly). Usar los `.woff2` originales del sistema de diseño (`project/fonts/` del artefacto) en `public/fonts/` con `@font-face`, sin dependencias nuevas; sacar Google Fonts de `index.html`. Necesita que el dueño provea los archivos o autorice sacarlos del artefacto.
@@ -66,3 +65,4 @@ Completa (ver "Hechas").
 - [x] **5. Foco y scroll**: al volver del detalle se recupera la posición en la lista y el foco en la fila tocada; al cambiar de paso o de vista el foco va al título; contorno de foco con teclado en los badges del resumen y los encabezados de color (hacia adentro donde hay `overflow: hidden`, también en las filas). Sin cambios visuales con mouse o toque.
 - [x] **6. Limpieza menor**: sin CSS muerto (`.gp-pick`, `.gp-bar__hint`); la barra de pasos es decorativa (`aria-hidden`) en vez de un `progressbar` sin nombre que repetía el título.
 - [x] **7. Objetivos táctiles de 44 px** (aprobado con antes/después): switch de subasta (zona tocable de 24 a 44 px, sin cambio visual), badges del resumen del paso 4 (de 25 a 44 px; más separación entre renglones) y pestañas del detalle (de 40 a 44 px, override en `app.css`).
+- [x] **8. Contraste** (aprobado con antes/después): notas de `ink-subtle` a `ink-muted` (4,44 → 8,57:1); encabezado de color ocupado a `ink-muted` (4,06 → 7,83:1); filas no disponibles sin opacidad general: planeta atenuado y texto en `ink-muted` (motivo de 2,59 → 7,83:1). El botón de la otra facción de un color ocupado sigue al 40 % (funciona como deshabilitado).
