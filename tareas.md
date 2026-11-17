@@ -21,7 +21,6 @@ Completa (ver "Hechas").
 ### Del dueño (fuera del código)
 
 - [ ] **21. Pedir a GitHub Support** que purgue el commit huérfano `6c8213323f2e8e1a18ab8ab4d016a3023d9cbb99` (material de terceros, todavía accesible por hash).
-- [ ] **22. Identidad.** Usar el email `noreply` de GitHub en los commits futuros (y activar "Keep my email private"). Decidir si `CLAUDE.md` debe nombrar a la empresa, dado que el repo es público.
 - [ ] **23. Dominio propio** (más adelante). Aísla localStorage del resto de `chinozanotti.github.io` y simplifica un backend futuro.
 
 ### Backlog
@@ -75,4 +74,5 @@ Completa (ver "Hechas").
 - [x] **20. Deuda de teclado del sistema documentada**: sección "Deuda conocida del sistema (bundle)" en el README del sistema de diseño (sin flechas en SegmentedControl y Tabs —verificado: con teclado no se puede cambiar jugadores, nivel ni pestañas—, Tabs sin tabpanel, Modal sin manejo de foco, botones de cerrar de 32 px).
 - [x] **25. Flechas del teclado desde la app**: componente `KeyNav` alrededor de los selectores de jugadores y nivel y de las pestañas del detalle (flechas con vuelta, Inicio, Fin; la selección y el foco se mueven juntos; las flechas no desplazan la página). Lógica en `src/lib/keyNav.js` con tests; 19 chequeos de teclado en Chrome. Sin cambios visuales.
 - [x] **24. Migración a React 19** (19.3.1, versión exacta): el bundle del sistema de diseño no usa nada de lo que React 19 eliminó (solo `createElement`, `useState`, `useRef`). Verificado: capturas idénticas a la versión con React 18 a 360/390 px, cero advertencias en modo desarrollo, foco, teclado, copiar, Deshacer, accesibilidad y CSP OK; auditoría de producción sin vulnerabilidades.
+- [x] **22. Identidad**: los commits de este repo usan el email `noreply` de GitHub (configurado con `git config --local`; los commits anteriores conservan el email anterior); `CLAUDE.md` ya no nombra a la empresa.
 - [x] **10. CSP y referrer por `<meta>`**: `config/csp.js` (con tests) la inserta solo en el build, después del `charset`; política sin `unsafe-inline` ni comodines; `referrer` en `no-referrer`. Sin `upgrade-insecure-requests` (Pages ya fuerza HTTPS y rompía las pruebas locales). Verificado en Chrome: cero violaciones en todo el recorrido, fuentes e íconos cargan, y un script inline de control queda bloqueado.
