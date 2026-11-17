@@ -69,7 +69,7 @@ button { font: inherit; }
 .gp-chip[aria-pressed="true"] .gf-icon { color: var(--accent-ink); }
 .gp-chip:focus-visible, .gp-fbtn:focus-visible, .gp-row:focus-visible, .gp-color__head:focus-visible, .gp-sum button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 /* dentro de contenedores con overflow: hidden el contorno va hacia adentro para que no se corte */
-.gp-row:focus-visible, .gp-color__head:focus-visible { outline-offset: -2px; }
+.gp-row:focus-visible, .gp-color__head:focus-visible, .gp-fbtn:focus-visible { outline-offset: -2px; }
 .gp-chip[disabled] { opacity: .4; cursor: not-allowed; }
 .gp-count { font-family: var(--font-display); font-weight: 700; color: var(--accent-ink); }
 
@@ -82,7 +82,13 @@ button { font: inherit; }
 .gp-fbtn { all: unset; box-sizing: border-box; cursor: pointer; min-height: 56px; padding: 8px 12px; background: var(--surface-200); color: var(--ink); display: flex; flex-direction: column; justify-content: center; gap: 2px; -webkit-tap-highlight-color: transparent; }
 .gp-fbtn b { font-family: var(--font-display); font-weight: 600; font-size: 15px; line-height: 18px; }
 .gp-fbtn small { font-size: 12px; line-height: 16px; color: var(--ink-muted); }
-.gp-fbtn[aria-pressed="true"] { background: color-mix(in srgb, var(--accent) 18%, var(--surface-200)); box-shadow: inset 0 0 0 2px var(--accent); }
+/* elegida por un rival: el fondo naranja hace de borde de 2 px y una capa interior hace de cara. Las esquinas de abajo
+   de la tarjeta tienen chaflán (11 px por dentro): la cara se recorta 10 px ahí para que el borde siga la diagonal. */
+.gp-fbtn { position: relative; isolation: isolate; }
+.gp-fbtn[aria-pressed="true"] { background: var(--accent); }
+.gp-fbtn[aria-pressed="true"]::before { content: ""; position: absolute; inset: 2px; z-index: -1; background: color-mix(in srgb, var(--accent) 18%, var(--surface-200)); --cf: calc(var(--chamfer-md) - 2px); }
+.gp-color__pair .gp-fbtn:first-child[aria-pressed="true"]::before { clip-path: polygon(0 0, 100% 0, 100% 100%, var(--cf) 100%, 0 calc(100% - var(--cf))); }
+.gp-color__pair .gp-fbtn:last-child[aria-pressed="true"]::before { clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cf)), calc(100% - var(--cf)) 100%, 0 100%); }
 .gp-fbtn[aria-pressed="true"] small { color: var(--accent-ink); }
 .gp-color--off .gp-fbtn:not([aria-pressed="true"]) { opacity: .4; }
 .gp-color--off .gp-color__head { color: var(--ink-muted); }
