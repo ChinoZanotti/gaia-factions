@@ -3,6 +3,7 @@ import { Badge, DIFFICULTY, Icon, Meter, Panel, PlanetToken, Tabs } from '../des
 import { FINAL, GUIDE, SCORINGS, colorOf } from '../data/data.js';
 import { CBY, FBY, SBY } from '../lookups.js';
 import CopyGuide from './CopyGuide.jsx';
+import KeyNav from './KeyNav.jsx';
 
 const GLOSSARY = [
   ['PI', 'Instituto Planetario'], ['AC', 'Academia'], ['RL', 'Laboratorio de investigación'], ['TS', 'Puesto comercial'],
@@ -98,7 +99,9 @@ export default function Detail({ id, pos, state, list }) {
       </div>
       <p className="gp-p" style={{ marginTop: 0 }}>{f.summary}</p>
       <CopyGuide name={f.name} guide={g} />
-      <Tabs label="Secciones" tabs={tabs} value={tab} onChange={setTab} />
+      <KeyNav values={tabs.map((t) => t.value)} value={tab} onChange={setTab}>
+        <Tabs label="Secciones" tabs={tabs} value={tab} onChange={setTab} />
+      </KeyNav>
       {tab === 'open' ? <Openings g={g} /> : tab === 'tips' ? <Tips g={g} /> : <Fit id={id} scorings={state.scorings} />}
       <p className="gp-note">Aperturas y consejos resumidos de los artículos de Arun Murali (BGG, 2021). Es una guía, no una garantía.</p>
     </div>
