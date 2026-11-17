@@ -8,7 +8,7 @@ export default function Summary({ state, go }) {
   return (
     <div className="gp-sum">
       <button type="button" onClick={() => go(0)}>
-        <Badge tone="info" icon="players">{state.players + ' jug.' + (state.auction ? ' · subasta' : '')}</Badge>
+        <Badge tone="info" icon="players">{state.players + ' jugadores' + (state.auction ? ' · subasta' : '')}</Badge>
       </button>
       <button type="button" onClick={() => go(0)}><Badge tone="info">{level.name}</Badge></button>
       {state.scorings.map((id) => (

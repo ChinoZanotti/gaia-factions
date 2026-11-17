@@ -9,14 +9,32 @@ export function baseRankOrder(players, auction, level) {
   return m;
 }
 
-// Línea corta que explica la posición de una facción. nameOf(id) devuelve el nombre visible.
-export function reasonFor(r, baseRank, players, nameOf) {
+// Empates: facciones disponibles que muestran el mismo puntaje (redondeado) que otra. Devuelve { id: [ids empatados] }.
+// La lista viene ordenada, así que los empates son contiguos. A igual puntaje el orden entre ellas es arbitrario.
+export function tiesOf(list) {
+  const out = {};
+  const avail = list.filter((r) => !r.unavailable);
+  for (const r of avail) {
+    const same = avail.filter((o) => o.id !== r.id && Math.round(o.score) === Math.round(r.score)).map((o) => o.id);
+    if (same.length) out[r.id] = same;
+  }
+  return out;
+}
+
+// "A", "A y B", "A, B y C"
+function joinNames(names) {
+  return names.length < 2 ? names.join('') : names.slice(0, -1).join(', ') + ' y ' + names.at(-1);
+}
+
+// Línea corta que explica la posición de una facción. nameOf(id) devuelve el nombre visible; tiedWith, los ids empatados.
+export function reasonFor(r, baseRank, players, nameOf, tiedWith = []) {
   if (r.unavailable) return r.takenBy === 'blocked' ? 'Color ocupado' : 'Color ocupado por ' + nameOf(r.takenBy);
   const parts = [];
   if (r.rivalAdj <= -2 && r.rivalBy.length) parts.push(RIVAL_WHY[r.rivalBy[0]]);
   if (r.finalAdj >= 3) parts.push('encaja con las puntuaciones finales');
-  else if (r.finalAdj <= -3) parts.push('flojo en estas puntuaciones finales');
+  else if (r.finalAdj <= -3) parts.push('poco encaje con estas puntuaciones finales');
   if (!parts.length) parts.push(baseRank <= 4 ? 'fuerte con ' + players + ' jugadores' : baseRank >= 11 ? 'débil con ' + players + ' jugadores' : 'nivel medio con ' + players + ' jugadores');
+  if (tiedWith.length) parts.push('empata con ' + joinNames(tiedWith.map(nameOf)));
   const s = parts.join(' · ');
   return s.charAt(0).toUpperCase() + s.slice(1);
 }

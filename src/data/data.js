@@ -147,7 +147,7 @@ var GUIDE = {
       {name:'RL + TS + 2M', tag:'Fuerte', text:'Prepara el PI para R2. Es popular y de las aperturas mejor puntuadas.'},
       {name:'RL + nM (con Navegación)', tag:'Expansión', text:'Mientras más minas, mejor. Sube Navegación para llegar a más planetas.'}
     ],
-    tips: ['Es fuerte en Gaia, Satélites y estructuras; el tipo de planeta es su punto débil.', 'Si te cortan los planetas transdimensionales sufres: protegé tu zona.', 'La AC en R1 rinde parecido al PI, pero casi nadie la prueba.'],
+    tips: ['Es fuerte en Gaia, Satélites y estructuras; el tipo de planeta es su punto débil.', 'Si te cortan los planetas transdimensionales sufrís: protegé tu zona.', 'La AC en R1 rinde parecido al PI, pero casi nadie la prueba.'],
     avoid: 'Jugarlos "siempre igual": aguantan varias rutas de pistas.'
   },
   lantids: {

@@ -25,12 +25,19 @@ function Openings({ g }) {
           </div>
         ))}
       </Panel>
-      <Panel size="sm" variant="flat" title="Siglas">
-        <div className="gp-gloss">
-          {GLOSSARY.map(([k, v]) => [<b key={k}>{k}</b>, <span key={k + '-d'}>{v}</span>])}
-        </div>
-      </Panel>
+      <Glossary />
     </>
+  );
+}
+
+// Las siglas aparecen en aperturas, consejos y "Qué evitar": el glosario va en las dos pestañas.
+function Glossary() {
+  return (
+    <Panel size="sm" variant="flat" title="Siglas">
+      <div className="gp-gloss">
+        {GLOSSARY.map(([k, v]) => [<b key={k}>{k}</b>, <span key={k + '-d'}>{v}</span>])}
+      </div>
+    </Panel>
   );
 }
 
@@ -42,11 +49,12 @@ function Tips({ g }) {
           {g.tips.map((t, i) => <li key={i}><Icon name="check" /><span>{t}</span></li>)}
         </ul>
       </Panel>
-      <Panel size="sm" variant="flat" title="Evitá">
+      <Panel size="sm" variant="flat" title="Qué evitar">
         <ul className="gp-list gp-list--bad">
           <li><Icon name="alert" /><span>{g.avoid}</span></li>
         </ul>
       </Panel>
+      <Glossary />
     </>
   );
 }

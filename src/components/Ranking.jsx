@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Badge, Meter, PlanetToken } from '../design-system';
 import useFlip from '../hooks/useFlip.js';
-import { baseRankOrder, reasonFor, rowAdjust, rowLabel, topSummary } from '../lib/reasons.js';
+import { baseRankOrder, reasonFor, rowAdjust, rowLabel, tiesOf, topSummary } from '../lib/reasons.js';
 import { FBY, factionName } from '../lookups.js';
 
 // Espera antes de anunciar un cambio, para no leer cada toque cuando se marcan varios datos seguidos.
@@ -22,7 +22,8 @@ function useTopAnnouncement(list) {
 
 export default function Ranking({ list, state, onPick }) {
   const ref = useRef(null);
-  const baseOrder = useMemo(() => baseRankOrder(state.players, state.auction), [state.players, state.auction]);
+  const baseOrder = useMemo(() => baseRankOrder(state.players, state.auction, state.level), [state.players, state.auction, state.level]);
+  const ties = useMemo(() => tiesOf(list), [list]);
   useFlip(ref, list.map((r) => r.id).join());
   const announcement = useTopAnnouncement(list);
   return (
@@ -31,7 +32,7 @@ export default function Ranking({ list, state, onPick }) {
       <ol className="gp-rank-wrap" role="list" aria-label="Ranking de facciones" ref={ref}>
         {list.map((r, i) => {
           const f = FBY[r.id], adj = rowAdjust(r), pos = i + 1;
-          const reason = reasonFor(r, baseOrder[r.id], state.players, factionName);
+          const reason = reasonFor(r, baseOrder[r.id], state.players, factionName, ties[r.id]);
           const cls = 'gp-row' + (i === 0 && !r.unavailable ? ' gp-row--top' : '') + (r.unavailable ? ' gp-row--off' : '');
           return (
             <li key={r.id}>

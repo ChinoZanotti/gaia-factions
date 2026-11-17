@@ -18,6 +18,7 @@ Serie "Navigating through Statistics" de Arun Murali (BGG, sept–oct 2021, dato
 2. Ajuste de puntuaciones finales = (promedio de las calificaciones de las 2 elegidas − 50) × 0.28.
 3. Ajuste de rivales = suma de RIVAL, tope −8.
 4. Puntaje final limitado a 0–100. Facciones cuyo color ya está ocupado (por rival o marcado a mano) van al final como "No".
+5. Empates: si dos facciones disponibles muestran el mismo puntaje redondeado, el motivo dice "empata con X". A igual puntaje el orden entre ellas es arbitrario (orden interno de la lista).
 
 ## Nivel de la mesa (noviembre de 2026)
 El paso 1 ("La mesa") pide jugadores, experiencia de la mesa y subasta. La experiencia elige qué tabla de rango promedio usa el motor; los ajustes de puntuación final (`FINAL`) y de rivales (`RIVAL`) y las aperturas (`GUIDE`) son los mismos para los tres niveles.
