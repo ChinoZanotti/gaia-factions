@@ -1,28 +1,7 @@
 // Test del motor de ranking (src/data/data.js). Sin dependencias: node --test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import fs from 'node:fs';
-import vm from 'node:vm';
-import path from 'node:path';
 import * as D from '../src/data/data.js';
-
-const ROOT = path.resolve(import.meta.dirname, '..');
-
-// ---- Transición: el módulo ES debe dar exactamente lo mismo que js/data.js (borrar junto con js/) ----
-const LEGACY = path.join(ROOT, 'js/data.js');
-test('módulo ES equivalente a js/data.js', { skip: !fs.existsSync(LEGACY) && 'js/data.js ya no existe' }, () => {
-  const ctx = { window: {} };
-  vm.runInNewContext(fs.readFileSync(LEGACY, 'utf8'), ctx);
-  const L = ctx.window.GaiaData;
-  const clone = (x) => structuredClone(x); // los objetos de vm son de otro realm
-  for (const k of ['IDS', 'RANK', 'SCORINGS', 'FINAL', 'COLORS', 'GUIDE', 'RIVAL_WHY']) assert.deepEqual(clone(L[k]), D[k], k);
-  const scs = [[], ...D.SCORINGS.map((s) => [s.id]), ...D.SCORINGS.flatMap((a, i) => D.SCORINGS.slice(i + 1).map((b) => [a.id, b.id]))];
-  for (const players of [2, 3, 4]) for (const auction of [false, true]) for (const scorings of scs)
-    for (const rivals of [[], ['taklons'], ['nevlas', 'ambas'], ['xenos', 'taklons', 'nevlas']]) for (const blocked of [[], ['oxide']]) {
-      const s = { players, auction, scorings, rivals, blocked };
-      assert.deepEqual(clone(L.rank(s)), D.rank(s));
-    }
-});
 
 const base = { players: 4, auction: false, scorings: [], rivals: [], blocked: [] };
 const order = (patch) => D.rank({ ...base, ...patch }).map((r) => r.id);

@@ -1,9 +1,9 @@
-// Servidor estático mínimo (solo lectura, solo localhost) para revisar la app.
+// Servidor estático mínimo (solo lectura, solo localhost) para revisar el build.
+// Uso: node scripts/serve.mjs [carpeta=dist] [puerto=8080]   (antes: npm run build)
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
-// Uso: node scripts/serve.mjs [carpeta=raíz del repo] [puerto=8080]
-const root = path.resolve(process.argv[2] || path.join(import.meta.dirname, '..'));
+const root = path.resolve(process.argv[2] || path.join(import.meta.dirname, '..', 'dist'));
 const port = Number(process.argv[3] || 8080);
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.png': 'image/png', '.svg': 'image/svg+xml', '.json': 'application/json' };
 http.createServer((req, res) => {

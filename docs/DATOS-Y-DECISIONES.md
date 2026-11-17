@@ -5,7 +5,7 @@ Serie "Navigating through Statistics" de Arun Murali (BGG, sept–oct 2021, dato
 - 00 intro/metodología · 01 tier list por facción (rango promedio) · 02 rutas de puntuación · 03 puntuación final · 04a aperturas PI/AC/RL · 04b aperturas por facción.
 - Reglas del juego: `docs/reglas/gaia-rulebook.txt`.
 
-## Qué es cada dato en js/data.js
+## Qué es cada dato en src/data/data.js
 - `RANK[jugadores][free|auction]`: "Avg. Rank Without Bid" (free) y "Avg. Rank" (auction) en la columna de mayor nivel: 4p = >300 elo, min score 120; 2p y 3p = >250 elo, min score 120. Menor es mejor. Fuente: tablas del artículo 01 (imágenes en tablas/01-tier-list-facciones/). Algunos valores de 2p/3p se leyeron a ojo de heatmaps pequeños (±0,01–0,03): verificarlos contra las imágenes.
 - `FINAL[facción][puntuación]`: calificación 0–100 de "qué tan seguido logra buen puntaje en esa puntuación final cuando gana". NO son datos del autor: sus ratings reales están en una hoja de Google que no pudimos abrir. Los valores son ESTIMACIONES derivadas del texto del artículo 03 (solo hay valores exactos citados: Geoden Tipos de planeta 97, Terrans Tipos 9, Bal T'aks Estructuras 47). Mejora pendiente: reemplazar por los números reales de la hoja (hay hojas por 2p/3p/4p y por pares de puntuaciones).
 - `RIVAL`: ajustes por rival (criterio propio, basado en observaciones del autor): Taklons/Nevlas crecen con carga de poder → penalizan a Gleens/Lantids (−4) y Ambas/Xenos (−2); Ambas penaliza Gleens (−3, riesgo de aislamiento); Xenos Gleens (−2). Tope total −8.

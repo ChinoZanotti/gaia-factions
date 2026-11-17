@@ -1,6 +1,6 @@
 # Sistema de diseño "Gaia Factions"
 
-Fuente original: https://claude.ai/artifact/HgTSSZJb4xB6ppmt1moYCz (artefacto tipo Design System). Esta es una copia de las reglas; el bundle de componentes está en `js/bundle.js`, los estilos en `css/bundle.css` y los tokens en `css/tokens.css` (generado a mano desde `project/tokens.json` del artefacto original, con los temas `space` y `rulebook`).
+Fuente original: https://claude.ai/artifact/HgTSSZJb4xB6ppmt1moYCz (artefacto tipo Design System). Esta es una copia de las reglas; el bundle de componentes está en `src/design-system/bundle.js` (sin modificar; se importa vía `src/design-system/index.js`), los estilos en `src/styles/bundle.css` y los tokens en `src/styles/tokens.css` (generado a mano desde `project/tokens.json` del artefacto original, con los temas `space` y `rulebook`).
 
 ## Voz
 - Español rioplatense con voseo ("Elegí", "Confirmá"). Nunca tuteo.
@@ -34,5 +34,5 @@ Logo, Icon, Button, IconButton, Panel, Banner, Badge, PlanetToken, ResourceToken
 - Sin emojis, sin arte oficial del juego. App no oficial, sin afiliación con Feuerland ni Capstone Games.
 
 ## Notas de la app
-- La app usa el bundle tal cual y lo adapta a celular con `css/app.css` (el sistema trae `.gf-fcard` de 300px y `.gf-rank` con columna de barra de 120–220px; la app usa filas propias `.gp-row` en 2 líneas).
-- Fuentes: `css/tokens.css` del paquete NO trae @font-face (index.html carga Google Fonts). Los .woff2 originales están en el artefacto del sistema de diseño en `project/fonts/` (barlow 400/500/600/700, chakra-petch 400/500/600/700, latin).
+- La app usa el bundle tal cual y lo adapta a celular con `src/styles/app.css` (el sistema trae `.gf-fcard` de 300px y `.gf-rank` con columna de barra de 120–220px; la app usa filas propias `.gp-row` en 2 líneas).
+- Fuentes: `src/styles/tokens.css` del paquete NO trae @font-face (index.html carga Google Fonts). Los .woff2 originales están en el artefacto del sistema de diseño en `project/fonts/` (barlow 400/500/600/700, chakra-petch 400/500/600/700, latin).
