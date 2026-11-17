@@ -24,6 +24,11 @@ button { font: inherit; }
 .gp-note { font-size: 13px; line-height: 18px; color: var(--ink-muted); }
 .gp-stack { display: flex; flex-direction: column; gap: 12px; }
 
+/* botones primary y secondary: marco sólido (--metal-300) en vez del cromo en degradé (.gf-metal) del sistema, por decisión del dueño */
+.gf-btn--primary .gf-btn__frame, .gf-btn--secondary .gf-btn__frame { background: var(--metal-300); }
+/* ventana del sistema (Modal): mismo criterio, marco exterior sólido; el filete naranja interior queda */
+.gf-modal .gf-panel__frame { background: var(--metal-300); }
+
 /* bottom action bar */
 .gp-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 25; padding: 12px max(16px, env(safe-area-inset-left)) calc(12px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-right)); background: color-mix(in srgb, var(--bg-000) 94%, transparent); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-top: 1px solid var(--surface-300); }
 .gp-bar__in { max-width: 528px; margin: 0 auto; display: flex; gap: 8px; align-items: center; }
