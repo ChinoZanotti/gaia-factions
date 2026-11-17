@@ -29,7 +29,6 @@ button { font: inherit; }
 .gp-bar__in { max-width: 528px; margin: 0 auto; display: flex; gap: 8px; align-items: center; }
 .gp-bar__in .gf-btn--primary { flex: 1; }
 .gp-bar .gf-btn__face { height: 52px; font-size: 15px; }
-.gp-bar__hint { font-size: 12px; line-height: 16px; color: var(--ink-muted); text-align: center; margin-bottom: 6px; }
 
 /* segmented players */
 .gp-seg { display: flex; width: 100%; }
@@ -46,7 +45,7 @@ button { font: inherit; }
 .gp-chip__d { display: block; font-family: var(--font-body); font-weight: 400; font-size: 12px; line-height: 16px; color: var(--ink-muted); }
 .gp-chip[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--surface-200)); box-shadow: var(--shadow-glow); }
 .gp-chip[aria-pressed="true"] .gf-icon { color: var(--accent-ink); }
-.gp-chip:focus-visible, .gp-fbtn:focus-visible, .gp-row:focus-visible, .gp-pick:focus-visible, .gp-color__head:focus-visible, .gp-sum button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.gp-chip:focus-visible, .gp-fbtn:focus-visible, .gp-row:focus-visible, .gp-color__head:focus-visible, .gp-sum button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 /* dentro de contenedores con overflow: hidden el contorno va hacia adentro para que no se corte */
 .gp-row:focus-visible, .gp-color__head:focus-visible { outline-offset: -2px; }
 .gp-chip[disabled] { opacity: .4; cursor: not-allowed; }

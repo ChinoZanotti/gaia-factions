@@ -65,7 +65,8 @@ export default function App() {
         <Logo variant="emblem" theme="dark" height={36} />
       </div>
       {!inDetail && (
-        <div className="gp-dots" role="progressbar" aria-valuemin={1} aria-valuemax={STEPS.length} aria-valuenow={step + 1}>
+        // Decorativa: el título ya dice "Paso N de 4".
+        <div className="gp-dots" aria-hidden="true">
           {STEPS.map((s, i) => <div key={i} className={'gp-dot' + (i <= step ? ' gp-dot--on' : '')} />)}
         </div>
       )}
