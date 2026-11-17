@@ -75,11 +75,14 @@ button { font: inherit; }
 .gp-row--top .gf-rank__pos { color: var(--accent-ink); }
 .gp-row--off { opacity: .45; }
 .gp-row--off .gf-meter-wrap { display: none; }
-.gp-rank-wrap { border: 1px solid var(--surface-300); border-radius: var(--radius-md); overflow: hidden; }
-.gp-rank-wrap .gp-row:last-child { border-bottom: 0; }
+.gp-rank-wrap { margin: 0; padding: 0; list-style: none; border: 1px solid var(--surface-300); border-radius: var(--radius-md); overflow: hidden; }
+.gp-rank-wrap li:last-child .gp-row { border-bottom: 0; }
 .gp-sum { display: flex; flex-wrap: wrap; gap: 8px; }
 .gp-sum button { all: unset; cursor: pointer; }
 .gp-hint { display: flex; gap: 8px; align-items: center; color: var(--ink-muted); font-size: 14px; line-height: 20px; }
+
+/* solo para lectores de pantalla (región viva del ranking) */
+.gp-sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
 
 /* detail */
 .gp-hero { display: flex; gap: 14px; align-items: center; }

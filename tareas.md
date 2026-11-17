@@ -8,7 +8,6 @@ Origen: **Molly** = revisión de UX y sistema de diseño; **Case** = revisión d
 
 ### Prioridad 1 — Sin impacto visual, bajo riesgo
 
-- [ ] **4. Ranking accesible** (Molly). Lista `ol`/`li` con el `button` adentro (hoy `role="listitem"` pisa el rol de botón); nombre accesible completo (facción, puesto, motivo, puntaje); región `role="status"` que anuncie el top 3 cuando cambia, con debounce. Adaptar `useFlip`. Archivos: `src/components/Ranking.jsx`, `src/hooks/useFlip.js`.
 - [ ] **5. Foco y scroll** (Molly). Al volver del detalle, restaurar el scroll y el foco en la fila tocada; al cambiar de paso, foco al título. Agregar `:focus-visible` a `.gp-sum button` y `.gp-color__head` (hoy el foco no se ve por `all: unset`). Archivos: `src/App.jsx`, `src/styles/app.css`.
 - [ ] **6. Limpieza menor** (Molly). Quitar CSS muerto (`.gp-pick`, `.gp-bar__hint`); la barra de pasos como decorativa (`aria-hidden`) en vez de `role="progressbar"` redundante con "Paso N de 4".
 
@@ -64,3 +63,4 @@ Origen: **Molly** = revisión de UX y sistema de diseño; **Case** = revisión d
 - [x] **2. Scripts locales endurecidos**: `serve.mjs` (400 en URLs malformadas, solo localhost, solo GET/HEAD, `nosniff`, con tests) y `audit-mobile.mjs` (puerto dinámico, borra el perfil).
 - [x] **3. Clon local limpio**: sin objetos del historial viejo (de 6,09 MB a 100 KB); sin forks en GitHub.
 - [x] **Dependabot**: `react` y `react-dom` agrupados y sin saltos mayores; cerrados los PRs #1 y #2 (React 19).
+- [x] **4. Ranking accesible**: `ol`/`li` con el botón adentro (`role="list"` explícito por VoiceOver), nombre accesible completo por fila (puesto, puntaje, motivo, ajuste), región `role="status"` que anuncia el nuevo top 3 con 600 ms de espera. Sin cambios visuales (capturas idénticas).

@@ -20,3 +20,24 @@ export function reasonFor(r, baseRank, players, nameOf) {
   const s = parts.join(' · ');
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
+
+// Ajuste visible en la fila (badge +N / −N): puntuaciones finales + rivales, redondeado.
+export function rowAdjust(r) {
+  return Math.round(r.finalAdj + r.rivalAdj);
+}
+
+// Nombre accesible de una fila: lo mismo que se ve, en una frase que un lector de pantalla lee de corrido.
+export function rowLabel(r, pos, name, reason) {
+  const why = reason.replace(/ · /g, ', ') + '.';
+  if (r.unavailable) return name + ', no disponible. ' + why;
+  const adj = rowAdjust(r);
+  const adjText = adj ? ' Ajuste por tus datos: ' + (adj > 0 ? 'más ' : 'menos ') + Math.abs(adj) + '.' : '';
+  return name + ', puesto ' + pos + ', puntaje ' + Math.round(r.score) + '. ' + why + adjText;
+}
+
+// Anuncio para la región viva: el top 3 disponible. Devuelve '' si no hay facciones disponibles.
+export function topSummary(list, nameOf, n = 3) {
+  const top = list.filter((r) => !r.unavailable).slice(0, n);
+  if (!top.length) return '';
+  return 'Ranking actualizado: ' + top.map((r, i) => (i + 1) + ' ' + nameOf(r.id)).join(', ') + '.';
+}
