@@ -36,3 +36,4 @@ Logo, Icon, Button, IconButton, Panel, Banner, Badge, PlanetToken, ResourceToken
 ## Notas de la app
 - La app usa el bundle tal cual y lo adapta a celular con `src/styles/app.css` (el sistema trae `.gf-fcard` de 300px y `.gf-rank` con columna de barra de 120–220px; la app usa filas propias `.gp-row` en 2 líneas).
 - Fuentes: `src/styles/tokens.css` del paquete NO trae @font-face (index.html carga Google Fonts). Los .woff2 originales están en el artefacto del sistema de diseño en `project/fonts/` (barlow 400/500/600/700, chakra-petch 400/500/600/700, latin).
+- Íconos del sitio: `public/favicon.svg` es el emblema del bundle (`LOGOS.emblem`) copiado tal cual; `public/apple-touch-icon.png` (180 px) es ese mismo SVG renderizado sobre `bg-000`. Si cambia el emblema, regenerarlos.

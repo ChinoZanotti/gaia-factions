@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120"><defs><linearGradient id="chrome-e" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#ffffff"/><stop offset=".42" stop-color="#c9ced6"/><stop offset=".5" stop-color="#6f7682"/><stop offset=".62" stop-color="#aab1bb"/><stop offset="1" stop-color="#eef1f5"/></linearGradient>
+<radialGradient id="space-e" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#3a2a6b"/><stop offset=".55" stop-color="#151a3a"/><stop offset="1" stop-color="#080a18"/></radialGradient>
+<radialGradient id="shade-e" cx=".3" cy=".3" r=".9"><stop offset="0" stop-color="#ffffff" stop-opacity=".28"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0"/><stop offset="1" stop-color="#000000" stop-opacity=".45"/></radialGradient>
+<clipPath id="planet-e"><circle cx="60" cy="60" r="30"/></clipPath></defs><g transform="translate(0 0) scale(1.0000)">
+<polygon points="30,0 90,0 120,30 120,90 90,120 30,120 0,90 0,30" fill="#0b0d1a"/>
+<polygon points="30.5,1.5 89.5,1.5 118.5,30.5 118.5,89.5 89.5,118.5 30.5,118.5 1.5,89.5 1.5,30.5" fill="url(#chrome-e)"/>
+<polygon points="33,7 87,7 113,33 113,87 87,113 33,113 7,87 7,33" fill="#1b1f2a"/>
+<polygon points="33.9,8.5 86.1,8.5 111.5,33.9 111.5,86.1 86.1,111.5 33.9,111.5 8.5,86.1 8.5,33.9" fill="url(#space-e)"/>
+<polygon points="35.5,12 84.5,12 108,35.5 108,84.5 84.5,108 35.5,108 12,84.5 12,35.5" fill="none" stroke="#f0a234" stroke-width="1.6"/>
+<circle cx="24" cy="34" r="0.9" fill="#dfe6ff" opacity="0.8"/><circle cx="96" cy="30" r="0.7" fill="#dfe6ff" opacity="0.7"/><circle cx="30" cy="90" r="0.6" fill="#dfe6ff" opacity="0.6"/><circle cx="92" cy="94" r="1" fill="#dfe6ff" opacity="0.8"/><circle cx="18" cy="62" r="0.6" fill="#dfe6ff" opacity="0.5"/><circle cx="104" cy="64" r="0.7" fill="#dfe6ff" opacity="0.6"/><circle cx="60" cy="16" r="0.6" fill="#dfe6ff" opacity="0.6"/>
+<circle cx="60" cy="60" r="41" fill="none" stroke="#3d7fd6" stroke-width="5" stroke-dasharray="32.30 225.31" stroke-dashoffset="0.00" transform="rotate(-96 60 60)"/><circle cx="60" cy="60" r="41" fill="none" stroke="#e8c33b" stroke-width="5" stroke-dasharray="32.30 225.31" stroke-dashoffset="-36.80" transform="rotate(-96 60 60)"/><circle cx="60" cy="60" r="41" fill="none" stroke="#8b5a2b" stroke-width="5" stroke-dasharray="32.30 225.31" stroke-dashoffset="-73.60" transform="rotate(-96 60 60)"/><circle cx="60" cy="60" r="41" fill="none" stroke="#d23f2c" stroke-width="5" stroke-dasharray="32.30 225.31" stroke-dashoffset="-110.40" transform="rotate(-96 60 60)"/><circle cx="60" cy="60" r="41" fill="none" stroke="#ee7d22" stroke-width="5" stroke-dasharray="32.30 225.31" stroke-dashoffset="-147.21" transform="rotate(-96 60 60)"/><circle cx="60" cy="60" r="41" fill="none" stroke="#8d929b" stroke-width="5" stroke-dasharray="32.30 225.31" stroke-dashoffset="-184.01" transform="rotate(-96 60 60)"/><circle cx="60" cy="60" r="41" fill="none" stroke="#e9f0f6" stroke-width="5" stroke-dasharray="32.30 225.31" stroke-dashoffset="-220.81" transform="rotate(-96 60 60)"/>
+<g clip-path="url(#planet-e)">
+<rect x="28" y="28" width="64" height="64" fill="#8e44b8"/>
+<path d="M28 28 H63 C56 38 66 46 58 56 C51 65 62 74 55 92 H28 Z" fill="#4bb14f"/>
+<path d="M63 28 C56 38 66 46 58 56 C51 65 62 74 55 92" fill="none" stroke="#fff6c8" stroke-width="2.2" opacity=".9"/>
+<circle cx="50" cy="48" r="30" fill="url(#shade-e)"/>
+</g>
+<circle cx="60" cy="60" r="31" fill="none" stroke="#0b0d1a" stroke-width="1.5" opacity=".6"/>
+</g></svg>
