@@ -50,10 +50,13 @@ test('URL malformada → 400 y el servidor sigue vivo', async () => {
   assert.equal((await get('/')).status, 200);
 });
 test('byte nulo → 400', async () => assert.equal((await get('/index.html%00.js')).status, 400));
-test('path traversal → 403 (/ y \\ codificadas)', async () => {
+test('path traversal: nunca sirve archivos fuera de la carpeta', async () => {
   const name = path.basename(dir) + '-secreto.txt';
   assert.equal((await get('/..%2f' + name)).status, 403);
-  assert.equal((await get('/..%5c' + name)).status, 403);
+  // "\" separa directorios solo en Windows (→ 403); en Linux es parte del nombre (→ 404). Ninguno filtra el archivo.
+  const r = await get('/..%5c' + name);
+  assert.ok(r.status === 403 || r.status === 404, 'status ' + r.status);
+  assert.notEqual(r.body, 'no');
 });
 test('Host ajeno (DNS rebinding) → 421; localhost aceptado', async () => {
   assert.equal((await get('/', 'evil.example:' + port)).status, 421);
