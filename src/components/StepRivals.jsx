@@ -1,4 +1,4 @@
-import { PlanetToken, DIFFICULTY } from '../design-system';
+import { Badge, PlanetToken, DIFFICULTY } from '../design-system';
 import { COLORS } from '../data/data.js';
 import { FBY } from '../lookups.js';
 
@@ -13,13 +13,19 @@ export default function StepRivals({ state, set }) {
         const rivalHere = c.f.filter((id) => state.rivals.includes(id));
         const blocked = state.blocked.includes(c.id);
         const off = rivalHere.length > 0 || blocked;
+        // Estado para lectores de pantalla: distingue ocupado por un rival de marcado a mano.
+        const status = rivalHere.length ? 'Ocupado por ' + rivalHere.map((id) => FBY[id].name).join(' y ') : blocked ? 'Ocupado (marcado a mano)' : 'Libre';
+        const statusId = 'color-' + c.id + '-estado';
         return (
           <div key={c.id} className={'gp-color' + (off ? ' gp-color--off' : '')}>
-            <button type="button" className="gp-color__head" aria-pressed={blocked} onClick={() => toggle('blocked', c.id)}>
+            <button type="button" className="gp-color__head" aria-pressed={blocked} aria-label={'Marcar ' + c.name + ' como ocupado'}
+              aria-describedby={statusId} onClick={() => toggle('blocked', c.id)}>
               <PlanetToken type={c.id} size="sm" />
               <span>{c.name}</span>
-              <span className={'gf-badge' + (off ? ' gf-badge--danger' : '')}>{off ? 'Ocupado' : 'Libre'}</span>
+              {off ? <Badge tone="danger">Ocupado</Badge> : <Badge tone="neutral">Libre</Badge>}
             </button>
+            {/* Fuera del botón: dentro, el último hijo se alinea a la derecha (margin-left: auto) */}
+            <span id={statusId} className="gp-sr-only">{status}</span>
             <div className="gp-color__pair">
               {c.f.map((id) => {
                 const f = FBY[id], on = state.rivals.includes(id);

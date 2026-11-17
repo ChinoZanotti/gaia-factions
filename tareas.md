@@ -13,7 +13,7 @@ Completa (ver "Hechas").
 
 ### Prioridad 2 — Cambios visuales chicos (requieren OK)
 
-- [ ] **13. Paso 3** (Molly). Usar el componente `Badge` para "Ocupado"/"Libre" y dar a los botones de color un nombre accesible que diga qué hacen.
+Completa (ver "Hechas").
 
 ### Prioridad 3 — Decisiones de producto o diseño
 
@@ -67,4 +67,5 @@ Completa (ver "Hechas").
 - [x] **11. Fuentes autoalojadas**: Barlow 400–700 y Chakra Petch 600/700 desde `src/assets/fonts/` (idénticas por SHA-256 a las del artefacto del sistema de diseño), licencia OFL en `public/fonts/`, sin Google Fonts; la CSP queda en `'self'` (con test). Capturas idénticas píxel a píxel a la versión con Google, incluido el ≥ de las aperturas. Confirmado de paso que Chakra Petch no tiene dígitos tabulares (tarea 9).
 - [x] **12. Textos** (aprobado con antes/después): "sufrís"; "poco encaje con estas puntuaciones finales"; "empata con X" cuando dos facciones disponibles muestran el mismo puntaje (a igual puntaje el orden es arbitrario); "Qué evitar"; "4 jugadores"; sin rayas largas; glosario también en Consejos. De paso: el motivo "fuerte / débil" ahora usa el nivel elegido (antes, siempre el de por defecto).
 - [x] **Peso de la puntuación final** (caso Ivits; opción b aprobada con antes/después): el ajuste por puntuación final se multiplica por un peso por facción (Ivits 0,64 … Gleens 1,16) calculado de las tablas de ganadores contra últimos del artículo 02. Documentado en `docs/DATOS-Y-DECISIONES.md`.
+- [x] **13. Paso 3**: "Ocupado"/"Libre" con el componente `Badge` (mismo aspecto); cada botón de color se anuncia como "Marcar X como ocupado", con descripción "Libre", "Ocupado por <rival>" u "Ocupado (marcado a mano)". Capturas idénticas.
 - [x] **10. CSP y referrer por `<meta>`**: `config/csp.js` (con tests) la inserta solo en el build, después del `charset`; política sin `unsafe-inline` ni comodines; `referrer` en `no-referrer`. Sin `upgrade-insecure-requests` (Pages ya fuerza HTTPS y rompía las pruebas locales). Verificado en Chrome: cero violaciones en todo el recorrido, fuentes e íconos cargan, y un script inline de control queda bloqueado.
